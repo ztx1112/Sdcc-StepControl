@@ -1,0 +1,12 @@
+{
+    // "files.associations": {
+    //     "intrins.h": "c",
+    //     "INTRINS.H": "cpp",
+    //     "reg51.h": "c",
+    //     "REG51.H": "cpp",
+    //     "stc8.h": "c"
+    // }
+    "cSpell.ignoreWords": [
+        "sbit"
+    ]
+}

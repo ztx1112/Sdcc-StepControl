@@ -1,0 +1,53 @@
+{
+    "name": "bujin",
+    "type": "C51",
+    "dependenceList": [
+        {
+            "groupName": "custom",
+            "depList": [
+                {
+                    "name": "default",
+                    "incList": [
+                        "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence",
+                        "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence\\build-in",
+                        "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence\\build-in\\STD"
+                    ],
+                    "libList": [],
+                    "sourceDirList": [],
+                    "defineList": []
+                }
+            ]
+        },
+        {
+            "groupName": "build-in",
+            "depList": [
+                {
+                    "name": "STD",
+                    "incList": [
+                        "c:\\Keil_v5\\C51\\INC",
+                        "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence\\build-in\\STD"
+                    ],
+                    "sourceDirList": [
+                        "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence\\build-in\\STD"
+                    ],
+                    "libList": [
+                        "c:\\Keil_v5\\C51\\LIB"
+                    ],
+                    "defineList": []
+                }
+            ]
+        }
+    ],
+    "compileConfig": {
+        "optimizationLevel": "8",
+        "optimizationType": "1",
+        "ramMode": "SMALL",
+        "romMode": "LARGE",
+        "removeUnusedCode": true
+    },
+    "srcDirs": [
+        ".\\src",
+        ".\\dependence"
+    ],
+    "outDir": ".\\out"
+}

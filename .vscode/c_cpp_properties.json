@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "name": "win32",
+            "includePath": [
+                "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence",
+                "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence\\build-in",
+                "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence\\build-in\\STD",
+                "c:\\Keil_v5\\C51\\INC"
+            ],
+            "defines": [],
+            "intelliSenseMode": "${default}"
+        }
+    ],
+    "version": 4
+}

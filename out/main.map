@@ -1,0 +1,173 @@
+LX51 LINKER/LOCATER V4.66.62.0                                                          04/08/2020  22:49:35  PAGE 1
+
+
+LX51 LINKER/LOCATER V4.66.62.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\LX51.EXE c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main.obj TO c:\Users\Administrator\D
+>> ocuments\Source\MCU\bujin\.\out\main REGFILE (c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main.ORC) PRINT
+>>  (c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main.map) REMOVEUNUSED
+
+
+CPU MODE:     8051 MODE
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main.obj (MAIN)
+         COMMENT TYPE 0: C51 V9.55
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+
+
+ACTIVE MEMORY CLASSES OF MODULE:  c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main (MAIN)
+
+BASE        START       END         USED      MEMORY CLASS
+==========================================================
+C:000000H   C:000000H   C:00FFFFH   0000CCH   CODE
+I:000000H   I:000000H   I:00007FH   00000AH   DATA
+I:000000H   I:000000H   I:0000FFH   000001H   IDATA
+
+
+MEMORY MAP OF MODULE:  c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main (MAIN)
+
+
+START     STOP      LENGTH    ALIGN  RELOC    MEMORY CLASS   SEGMENT NAME
+=========================================================================
+
+* * * * * * * * * * *   D A T A   M E M O R Y   * * * * * * * * * * * * *
+000000H   000007H   000008H   ---    AT..     DATA           "REG BANK 0"
+000008H   000009H   000002H   BYTE   UNIT     DATA           ?DT?MAIN
+00000AH   00000AH   000001H   BYTE   UNIT     IDATA          ?STACK
+
+* * * * * * * * * * *   C O D E   M E M O R Y   * * * * * * * * * * * * *
+000000H   000002H   000003H   ---    OFFS..   CODE           ?CO??C_STARTUP?0
+000003H   00002FH   00002DH   BYTE   UNIT     CODE           ?PR?MAIN?MAIN
+000030H   000051H   000022H   BYTE   UNIT     CODE           ?PR?_RUNMOTOR?MAIN
+000052H   000070H   00001FH   BYTE   UNIT     CODE           ?PR?RUN?MAIN
+000071H   00008EH   00001EH   BYTE   UNIT     CODE           ?PR?TOHOME?MAIN
+00008FH   0000A8H   00001AH   BYTE   UNIT     CODE           ?PR?DELAY100US?MAIN
+0000A9H   0000BFH   000017H   BYTE   UNIT     CODE           ?PR?_DELAY_MS?MAIN
+0000C0H   0008BCH   0007FDH   ---    ---      **GAP**
+0008BDH   0008C8H   00000CH   BYTE   UNIT     CODE           ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main (MAIN)
+
+
+FUNCTION/MODULE              BIT_GROUP   DATA_GROUP 
+--> CALLED FUNCTION/MODULE  START  STOP  START  STOP
+====================================================
+?C_C51STARTUP               ----- -----  ----- -----
+  +--> MAIN/MAIN
+
+MAIN/MAIN                   ----- -----  ----- -----
+  +--> _DELAY_MS/MAIN
+  +--> TOHOME/MAIN
+  +--> RUN/MAIN
+
+_DELAY_MS/MAIN              ----- -----  ----- -----
+
+LX51 LINKER/LOCATER V4.66.62.0                                                        04/08/2020  22:49:35  PAGE 2
+
+
+TOHOME/MAIN                 ----- -----  ----- -----
+  +--> _RUNMOTOR/MAIN
+  +--> DELAY100US/MAIN
+
+_RUNMOTOR/MAIN              ----- -----  ----- -----
+  +--> DELAY100US/MAIN
+
+DELAY100US/MAIN             ----- -----  ----- -----
+
+RUN/MAIN                    ----- -----  ----- -----
+  +--> _DELAY_MS/MAIN
+  +--> _RUNMOTOR/MAIN
+  +--> TOHOME/MAIN
+
+
+
+PUBLIC SYMBOLS OF MODULE:  c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main (MAIN)
+
+
+      VALUE       CLASS    TYPE      PUBLIC SYMBOL NAME
+      =================================================
+      00000000H   NUMBER   ---       ?C?CODESEG
+      00000000H   NUMBER   ---       ?C?XDATASEG
+      01000003H   CODE     ---       ?C_START
+      01000000H   CODE     ---       ?C_STARTUP
+      010000A9H   CODE     ---       _delay_ms
+      01000030H   CODE     ---       _Runmotor
+      010000A0H   CODE     ---       Delay100us
+      00000008H   DATA     WORD      i
+      01000003H   CODE     ---       main
+      01000052H   CODE     ---       Run
+      01000071H   CODE     ---       Tohome
+
+
+
+SYMBOL TABLE OF MODULE:  c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main (MAIN)
+
+      VALUE       REP       CLASS    TYPE      SYMBOL NAME
+      ====================================================
+      ---         MODULE    ---      ---       MAIN
+      00000008H   PUBLIC    DATA     WORD      i
+      01000071H   PUBLIC    CODE     ---       Tohome
+      01000030H   PUBLIC    CODE     ---       _Runmotor
+      01000052H   PUBLIC    CODE     ---       Run
+      01000003H   PUBLIC    CODE     ---       main
+      010000A0H   PUBLIC    CODE     ---       Delay100us
+      010000A9H   PUBLIC    CODE     ---       _delay_ms
+
+      010000A9H   BLOCK     CODE     ---       LVL=0
+      010000A9H   BLOCK     CODE     NEAR LAB  LVL=1
+      00000004H   SYMBOL    DATA     VOID      i
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      0100008FH   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010000A0H   BLOCK     CODE     ---       LVL=0
+      010000A0H   BLOCK     CODE     NEAR LAB  LVL=1
+      00000007H   SYMBOL    DATA     VOID      i
+      00000006H   SYMBOL    DATA     VOID      j
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000003H   BLOCK     CODE     ---       LVL=0
+LX51 LINKER/LOCATER V4.66.62.0                                                        04/08/2020  22:49:35  PAGE 3
+
+
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000052H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000030H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000071H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      ---         MODULE    ---      ---       ?C_STARTUP
+      01000000H   PUBLIC    CODE     ---       ?C_STARTUP
+
+
+
+FUNCTION REGISTER MASKS
+
+
+FUNCTION . . . REG MASK
+========================
+
+_delay_ms. . . @0x080008f0
+_Runmotor. . . @0x180008f0
+Delay100us . . @0x080000c0
+Tohome . . . . @0x180008f0
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00BDH BYTE ( 9%) *
+******************************************************************************
+
+Program Size: data=11.0 xdata=0 const=0 code=204
+LX51 RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
