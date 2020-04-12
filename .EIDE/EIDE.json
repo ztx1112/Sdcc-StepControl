@@ -40,8 +40,8 @@
     ],
     "compileConfig": {
         "optimizationLevel": "8",
-        "optimizationType": "1",
-        "ramMode": "SMALL",
+        "optimizationType": "0",
+        "ramMode": "LARGE",
         "romMode": "LARGE",
         "removeUnusedCode": true
     },

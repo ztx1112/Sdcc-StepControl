@@ -1,9 +1,9 @@
-C51 COMPILER V9.55   MAIN                                                                  04/08/2020 22:49:34 PAGE 1   
+C51 COMPILER V9.55   MAIN                                                                  04/12/2020 17:13:52 PAGE 1   
 
 
 C51 COMPILER V9.55, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main.obj
-COMPILER INVOKED BY: c:\Keil_v5\C51\BIN\C51.exe c:\Users\Administrator\Documents\Source\MCU\bujin\.\src\main.c SMALL OMF
+COMPILER INVOKED BY: c:\Keil_v5\C51\BIN\C51.exe c:\Users\Administrator\Documents\Source\MCU\bujin\.\src\main.c LARGE OMF
                     -2 ROM(LARGE) OPTIMIZE(8,SPEED) REGFILE(c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main.ORC) INCDIR(c:\Users
                     -\Administrator\Documents\Source\MCU\bujin\.\dependence;c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\bu
                     -ild-in;c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD;c:\Keil_v5\C51\INC) PRINT(c:\Users\Ad
@@ -12,156 +12,395 @@ COMPILER INVOKED BY: c:\Keil_v5\C51\BIN\C51.exe c:\Users\Administrator\Documents
 
 line level    source
 
-   1          #include "stc8.h"
-   2          #include <intrins.h>
-   3          
-   4          sbit Y0=P2^5;
-   5          sbit Y1=P2^4;
-   6          sbit Y2=P2^3;
-   7          sbit Y3=P2^2;
-   8          sbit Y4=P4^2;
-   9          sbit Y5=P2^0;
-  10          
-  11          sbit X0=P1^2;
-  12          sbit X1=P1^3;
-  13          sbit X2=P1^4;
-  14          sbit X3=P4^4;
-  15          sbit X4=P1^5;
-  16          sbit X5=P1^6;
-  17          sbit X6=P1^7;
-  18          sbit X7=P3^2;
-  19          sbit X8=P3^3;
-  20          sbit X9=P3^4;
-  21          
-  22          
-  23          sbit PUL=P0^6;
-  24          sbit DIR=P0^4;
+   1          #include "C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\stc8.h"
+   2          #include <C:\Keil_v5\C51\INC\intrins.h>
+   3          #include "C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\USART.h"
+   4          //#include "C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\timer.h"
+   5          #include "C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\EEPROM.h"
+   6          
+   7          
+   8          sbit Y0=P2^5;
+   9          sbit Y1=P2^4;
+  10          sbit Y2=P2^3;
+  11          sbit Y3=P2^2;
+  12          sbit Y4=P4^2;
+  13          sbit Y5=P2^0;
+  14          
+  15          sbit X0=P1^2;
+  16          sbit X1=P1^3;
+  17          sbit X2=P1^4;
+  18          sbit X3=P4^4;
+  19          sbit X4=P1^5;
+  20          sbit X5=P1^6;
+  21          sbit X6=P1^7;
+  22          sbit X7=P3^2;
+  23          sbit X8=P3^3;
+  24          sbit X9=P3^4;
   25          
   26          
-  27          void Runmotor(unsigned int);
-  28          void Tohome();
-  29          void Run();
-  30          int Ishome();
+  27          sbit PUL=P0^6;
+  28          sbit DIR=P0^4;
+  29          
+  30          enum UART_flag{MODE=1,BITS,ADDRESS,DAT,ENDBITS,RESULT}Flags;
   31          
-  32          unsigned int i;
-  33          
-  34          void  delay_ms(unsigned int ms)
-  35          {
-  36   1           unsigned int i;
-  37   1         do{
-  38   2              i = 24000000L / 13000;
-  39   2            while(--i)  ;   //14T per loop
-  40   2           }while(--ms);
-  41   1      }
-  42          
-  43          void Delay100us()   //@24.000MHz
-  44          {
-  45   1        unsigned char i, j;
-  46   1      
-  47   1        i = 4;
-  48   1        j = 27;
-  49   1        do
-  50   1        {
-C51 COMPILER V9.55   MAIN                                                                  04/08/2020 22:49:34 PAGE 2   
+  32          typedef xdata struct
+  33          {
+  34               u8 mode;     //模式
+  35               u8 data_bits;     //数据位数
+  36               u8 datas[64];   //数据缓存
+  37               u8 data_now;   //当前数据位数
+  38               u8 address;  //数据地址
+  39               u8 flag;     //标志
+  40          }UART_Status;
+  41          
+  42          void Runmotor(unsigned int);
+  43          void Tohome();
+  44          void Run();
+  45          void  UART_Init();
+  46          void UART_Read(u8 port);
+  47          void UART_Handle(u8);
+  48          //void Timer_Init(u16);
+  49          void Rom_Init();
+  50          char Isbuttonon();
+C51 COMPILER V9.55   MAIN                                                                  04/12/2020 17:13:52 PAGE 2   
 
-  51   2          while (--j);
-  52   2        } while (--i);
-  53   1      }
-  54          
+  51          
+  52          //TIM_InitTypeDef xdata TIM_InitStructure;          //结构定义
+  53          u16 MotorHZ;   //马达运行频率 addres=0x0000
+  54          u16 MotorCycle;     //马达运行圈数 addres=0x0010
   55          
-  56          
+  56          UART_Status Status;
   57          
-  58          int main() 
-  59          {
-  60   1           P2=0x00;
-  61   1           P0M1=0x00;
-  62   1           P0M0=0X00;
-  63   1           P2M0=0xff;
-  64   1           P2M1=0x00;
-  65   1           delay_ms(100);
-  66   1           Tohome();
-  67   1           while(1)
-  68   1           {
-  69   2                if(X3==0&&X4!=0&&X2!=0)
-  70   2                {
-  71   3                     delay_ms(5);
-  72   3                     if(X3==0)Run();
-  73   3                }
-  74   2           }
-  75   1      
-  76   1           return 0;
-  77   1      }
-  78          
-  79          void Run()
-  80          {
-  81   1           Y0=1;
-  82   1           while(1)
-  83   1           {
-  84   2                if(X4==0)
-  85   2                {
-  86   3                     delay_ms(10);
-  87   3                     Runmotor(2000);
-  88   3                     Y0=0;
-  89   3                     Tohome();
-  90   3                     while (1)
-  91   3                     {
-  92   4                          if(X4!=0&&X2!=0)break;
-  93   4                     }
-  94   3                     return;
-  95   3                }
-  96   2           }
-  97   1      }
-  98          
-  99          
- 100          void Runmotor(unsigned int num)
- 101          {
- 102   1           i=0;
- 103   1           while(1)
- 104   1           {
- 105   2                if(i>num)break;
- 106   2                PUL=0;
- 107   2                Delay100us();
- 108   2                Delay100us();
- 109   2                Delay100us();
- 110   2                PUL=1;
- 111   2                Delay100us();
- 112   2                Delay100us();
-C51 COMPILER V9.55   MAIN                                                                  04/08/2020 22:49:34 PAGE 3   
+  58          unsigned int i,ii;
+  59          
+  60          u8 Button1=0;
+  61          u8 Button2=0;
+  62          
+  63          u16 dd;
+  64          u8 dh,dl;
+  65          u8 datas[2];
+  66          u8 temp[64];
+  67          
+  68          #define WRITE 'w'  //写入模式
+  69          #define READ 'r'    //读取模式
+  70          #define ENDBIT 0x18 //结束位
+  71          
+  72          
+  73          
+  74          
+  75          
+  76          void  delay_ms(unsigned int ms)
+  77          {
+  78   1           unsigned int i;
+  79   1         do{
+  80   2              i = 24000000L / 13000;
+  81   2            while(--i)  ;   //14T per loop
+  82   2           }while(--ms);
+  83   1      }
+  84          
+  85          void Delay100us()   //@24.000MHz
+  86          {
+  87   1        unsigned char i, j;
+  88   1        i = 4;
+  89   1        j = 27;
+  90   1        do
+  91   1        {
+  92   2          while (--j);
+  93   2        } while (--i);
+  94   1      }
+  95          void Delay1us()   //@24.000MHz
+  96          {
+  97   1        unsigned char i;
+  98   1      
+  99   1        i = 6;
+ 100   1        while (--i);
+ 101   1      }
+ 102          
+ 103          
+ 104          
+ 105          
+ 106          int main() 
+ 107          {
+ 108   1           P2=0x00;
+ 109   1           P0M1=0x00;
+ 110   1           P0M0=0X00;
+ 111   1           P2M0=0xff;
+ 112   1           P2M1=0x00;
+C51 COMPILER V9.55   MAIN                                                                  04/12/2020 17:13:52 PAGE 3   
 
- 113   2                Delay100us();
- 114   2                i=i+1;
- 115   2           }
- 116   1      }
- 117          
- 118          void Tohome()
- 119          {
- 120   1           Runmotor(100);
- 121   1           while(1)
- 122   1           {
- 123   2                if(X2==1)return;
- 124   2                PUL=0;
- 125   2                Delay100us();
- 126   2                Delay100us();
- 127   2                Delay100us();
- 128   2                Delay100us();
- 129   2                Delay100us();
- 130   2                PUL=1;
- 131   2                Delay100us();
- 132   2                Delay100us();
- 133   2                Delay100us();
- 134   2                Delay100us();
- 135   2                Delay100us();
- 136   2           }
- 137   1      }
-*** WARNING C294 IN LINE 76 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\src\main.c: unreachable code
+ 113   1           delay_ms(5);
+ 114   1           UART_Init();
+ 115   1           delay_ms(5);
+ 116   1           Rom_Init();
+ 117   1           delay_ms(100);
+ 118   1           Tohome();
+ 119   1           while(1)
+ 120   1           {
+ 121   2                if(X3!=1&&X2!=0)
+ 122   2                {
+ 123   3                     if(Isbuttonon())Run();
+ 124   3                }
+ 125   2                UART_Read(0);
+ 126   2                Rom_Init();
+ 127   2           }
+ 128   1      
+ 129   1           return 0;
+ 130   1      }
+ 131          
+ 132          void Run()
+ 133          {
+ 134   1           Y0=1;
+ 135   1           while(1)
+ 136   1           {
+ 137   2                if(X2==0)
+ 138   2                {
+ 139   3                     delay_ms(10);
+ 140   3                     Runmotor(MotorHZ);
+ 141   3                     Y0=0;
+ 142   3                     Tohome();
+ 143   3                     while (1)
+ 144   3                     {
+ 145   4                          if(X3!=0&&X2!=0)break;
+ 146   4                     }
+ 147   3                     return;
+ 148   3                }
+ 149   2           }
+ 150   1      }
+ 151          
+ 152          
+ 153          void Runmotor(unsigned int num)
+ 154          {
+ 155   1           i=0;
+ 156   1           ii=0;
+ 157   1           while(1)
+ 158   1           {
+ 159   2                if(i>num)break;
+ 160   2                PUL=0;
+ 161   2                for(ii=0;ii<MotorHZ;ii++)
+ 162   2                {
+ 163   3                     Delay1us();
+ 164   3                }
+ 165   2                PUL=1;
+ 166   2                for(ii=0;ii<MotorHZ;ii++)
+ 167   2                {
+ 168   3                     Delay1us();
+ 169   3                }
+ 170   2                i=i+1;
+ 171   2           }
+ 172   1      }
+ 173          
+ 174          void Tohome()
+C51 COMPILER V9.55   MAIN                                                                  04/12/2020 17:13:52 PAGE 4   
+
+ 175          {
+ 176   1           Runmotor(100);
+ 177   1           while(1)
+ 178   1           {
+ 179   2                if(X3==1)return;
+ 180   2                PUL=0;
+ 181   2                Delay100us();
+ 182   2                Delay100us();
+ 183   2                Delay100us();
+ 184   2                Delay100us();
+ 185   2                Delay100us();
+ 186   2                PUL=1;
+ 187   2                Delay100us();
+ 188   2                Delay100us();
+ 189   2                Delay100us();
+ 190   2                Delay100us();
+ 191   2                Delay100us();
+ 192   2           }
+ 193   1      }
+ 194          
+ 195          void UART_Read(u8 port)
+ 196          {
+ 197   1           Delay100us();
+ 198   1           // if(COM1.RX_TimeOut > 0)   //超时计数
+ 199   1        //  {
+ 200   1        //    if(--COM1.RX_TimeOut == 0)
+ 201   1        //    {
+ 202   1        //      if(COM1.RX_Cnt > 0)
+ 203   1        //      {
+ 204   1        //        for(i=0; i<COM1.RX_Cnt; i++)
+ 205   1           //                     {
+ 206   1           //                          UART_Handle(RX1_Buffer[i]);
+ 207   1           //                     }
+ 208   1        //      }
+ 209   1        //      COM1.RX_Cnt = 0;
+ 210   1        //    }
+ 211   1        //  }
+ 212   1        if(COM2.RX_TimeOut > 0)   //超时计数
+ 213   1          {
+ 214   2            if(--COM2.RX_TimeOut == 0)
+ 215   2            {
+ 216   3              if(COM2.RX_Cnt > 0)
+ 217   3              {
+ 218   4                for(i=0; i<COM2.RX_Cnt; i++)
+ 219   4                               {
+ 220   5                                    UART_Handle(RX2_Buffer[i]);
+ 221   5                               }
+ 222   4              }
+ 223   3              COM2.RX_Cnt = 0;
+ 224   3            }
+ 225   2          }
+ 226   1      }
+*** WARNING C280 IN LINE 195 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\src\main.c: 'port': unreferenced loc
+             -al variable
+ 227          
+ 228          
+ 229          
+ 230          void  UART_Init()
+ 231          {
+ 232   1        COMx_InitDefine   COMx_InitStructure;         //结构定义
+ 233   1        // COMx_InitStructure.UART_Mode      = UART_8bit_BRTx;    //模式,       UART_ShiftRight,UART_8bit_BRTx,UA
+             -RT_9bit,UART_9bit_BRTx
+C51 COMPILER V9.55   MAIN                                                                  04/12/2020 17:13:52 PAGE 5   
+
+ 234   1        // COMx_InitStructure.UART_BRT_Use   = BRT_Timer1;      //使用波特率,   BRT_Timer1, BRT_Timer2 (注意:
+             - 串口2固定使用BRT_Timer2)
+ 235   1        // COMx_InitStructure.UART_BaudRate  = 115200ul;      //波特率, 一般 110 ~ 115200
+ 236   1        // COMx_InitStructure.UART_RxEnable  = ENABLE;        //接收允许,   ENABLE或DISABLE
+ 237   1        // COMx_InitStructure.BaudRateDouble = DISABLE;     //波特率加倍, ENABLE或DISABLE
+ 238   1        // COMx_InitStructure.UART_Interrupt = ENABLE;        //中断允许,   ENABLE或DISABLE
+ 239   1        // COMx_InitStructure.UART_Polity    = PolityLow;     //中断优先级, PolityLow,PolityHigh
+ 240   1        // COMx_InitStructure.UART_P_SW      = UART1_SW_P30_P31;  //切换端口,   UART1_SW_P30_P31,UART1_SW_P36_
+             -P37,UART1_SW_P16_P17(必须使用内部时钟)
+ 241   1        // COMx_InitStructure.UART_RXD_TXD_Short = DISABLE;   //内部短路RXD与TXD, 做中继, ENABLE,DISABLE
+ 242   1        // USART_Configuration(USART1, &COMx_InitStructure);    //初始化串口1 USART1,USART2
+ 243   1      
+ 244   1        COMx_InitStructure.UART_Mode      = UART_8bit_BRTx;   //模式,       UART_ShiftRight,UART_8bit_BRTx,UART_
+             -9bit,UART_9bit_BRTx
+ 245   1        COMx_InitStructure.UART_BaudRate  = 115200ul;     //波特率,     110 ~ 115200
+ 246   1        COMx_InitStructure.UART_RxEnable  = ENABLE;       //接收允许,   ENABLE或DISABLE
+ 247   1        COMx_InitStructure.UART_Interrupt = DISABLE;        //中断允许,   ENABLE或DISABLE
+ 248   1        COMx_InitStructure.UART_Polity    = PolityLow;      //中断优先级, PolityLow,PolityHigh
+ 249   1        COMx_InitStructure.UART_P_SW      = UART2_SW_P10_P11; //切换端口,   UART2_SW_P10_P11,UART2_SW_P46_P47
+ 250   1        USART_Configuration(USART2, &COMx_InitStructure);   //初始化串口2 USART1,USART2
+ 251   1      }
+ 252          
+ 253          // void Timer_Init(u16 time)
+ 254          // {
+ 255          //  TIM_InitStructure.TIM_Mode      = TIM_16BitAutoReload;  //指定工作模式,   TIM_16BitAutoReload,TIM
+             -_16Bit,TIM_8BitAutoReload,TIM_16BitAutoReloadNoMask
+ 256          //  TIM_InitStructure.TIM_Polity    = PolityLow;      //指定中断优先级, PolityHigh,PolityLow
+ 257          //  TIM_InitStructure.TIM_Interrupt = ENABLE;       //中断是否允许,   ENABLE或DISABLE
+ 258          //  TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_1T;     //指定时钟源,     TIM_CLOCK_1T,TIM_CLOCK_12T,TI
+             -M_CLOCK_Ext
+ 259          //  TIM_InitStructure.TIM_ClkOut    = ENABLE;       //是否输出高速脉冲, ENABLE或DISABLE
+ 260          //  TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / 2*time);   //初值,
+ 261          //  TIM_InitStructure.TIM_Run       = ENABLE;       //是否初始化后启动定时器, ENABLE或DISABLE
+ 262          //  Timer_Inilize(Timer4,&TIM_InitStructure);       //初始化Timer0   Timer0,Timer1,Timer2
+ 263          // }
+ 264          
+ 265          void Rom_Init()
+ 266          {
+ 267   1           EEPROM_read_n(0x00,temp,2);
+ 268   1           MotorHZ=temp[1];
+ 269   1           MotorHZ<<8;
+*** WARNING C275 IN LINE 269 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\src\main.c: expression with possibly
+             - no effect
+ 270   1           MotorHZ &= temp[0];
+ 271   1           EEPROM_read_n(0x10,temp,2);
+ 272   1           MotorCycle=temp[1];
+ 273   1           MotorCycle<<8;
+*** WARNING C275 IN LINE 273 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\src\main.c: expression with possibly
+             - no effect
+ 274   1           MotorCycle &= temp[0];
+ 275   1      }
+ 276          
+ 277          
+ 278          void UART_Handle(u8 dat)
+ 279          {
+ 280   1           switch (dat)
+ 281   1           {
+ 282   2           case 'w':
+ 283   2                Status.mode='w';
+ 284   2                Status.flag=MODE;
+ 285   2                break;
+ 286   2           case 'r':
+C51 COMPILER V9.55   MAIN                                                                  04/12/2020 17:13:52 PAGE 6   
+
+ 287   2                Status.mode='r';
+ 288   2                Status.flag=MODE;
+ 289   2                break;
+ 290   2           default:
+ 291   2                switch (Status.flag)
+ 292   2                {
+ 293   3                case MODE:
+ 294   3                     Status.data_bits=dat;
+ 295   3                     Status.flag=BITS;
+ 296   3                     break;
+ 297   3                case BITS:
+ 298   3                     Status.address=dat;
+ 299   3                     Status.flag=ADDRESS;
+ 300   3                     break;
+ 301   3                case ADDRESS:
+ 302   3                     Status.address=dat;
+ 303   3                     Status.flag=ENDBITS;
+ 304   3                     break;
+ 305   3                case ENDBITS:
+ 306   3                     if(dat!=ENDBIT)
+ 307   3                     {
+ 308   4                          Status.datas[Status.data_now]=dat;
+ 309   4                          Status.data_now++;
+ 310   4                          break;
+ 311   4                     }
+ 312   3                     if(dat==ENDBIT)
+ 313   3                     {
+ 314   4                          Status.flag=RESULT;
+ 315   4                          if(Status.mode==READ)
+ 316   4                          {
+ 317   5                               EEPROM_read_n(Status.address,Status.datas,Status.data_bits);
+ 318   5                          }
+ 319   4                          if(Status.mode==WRITE)
+ 320   4                          {
+ 321   5                               EEPROM_write_n(Status.address,Status.datas,Status.data_bits);
+ 322   5                          }
+ 323   4                          break;
+ 324   4                     }
+ 325   3                default:
+ 326   3                     break;
+ 327   3                }
+ 328   2                break;
+ 329   2           }
+ 330   1      }
+ 331          
+ 332          char Isbuttonon()
+ 333          {
+ 334   1           char cc,ccc;
+ 335   1           Button1=X0;
+ 336   1           Button2=X1;
+ 337   1           if(X0==0)
+ 338   1           {
+ 339   2                Delay100us();
+ 340   2                if(Button1!=X0)
+ 341   2                     cc=1;
+ 342   2                else
+ 343   2                     cc=0;
+ 344   2           }
+ 345   1           if(X1==0)
+ 346   1           {
+ 347   2                Delay100us();
+ 348   2                if(Button2!=X1)
+C51 COMPILER V9.55   MAIN                                                                  04/12/2020 17:13:52 PAGE 7   
+
+ 349   2                     ccc=1;
+ 350   2                else
+ 351   2                     ccc=0;
+ 352   2                
+ 353   2           }
+ 354   1           if(cc==1&&ccc==1)return 1;
+ 355   1           return 0;
+ 356   1      }
+*** WARNING C294 IN LINE 129 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\src\main.c: unreachable code
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    189    ----
+   CODE SIZE        =    817    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----    ----
+   XDATA SIZE       =    150      14
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      2    ----
+   DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
    EDATA SIZE       =   ----    ----
@@ -171,4 +410,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  4 WARNING(S),  0 ERROR(S)
