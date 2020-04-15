@@ -1,4 +1,4 @@
-LX51 LINKER/LOCATER V4.66.62.0                                                          04/12/2020  17:13:53  PAGE 1
+LX51 LINKER/LOCATER V4.66.62.0                                                          04/15/2020  11:38:25  PAGE 1
 
 
 LX51 LINKER/LOCATER V4.66.62.0, INVOKED BY:
@@ -9,7 +9,7 @@ C:\KEIL_V5\C51\BIN\LX51.EXE c:\Users\Administrator\Documents\Source\MCU\bujin\.\
 
 
 CPU MODE:     8051 MODE
-MEMORY MODEL: LARGE
+MEMORY MODEL: COMPACT
 
 
 INPUT MODULES INCLUDED:
@@ -19,37 +19,33 @@ INPUT MODULES INCLUDED:
          COMMENT TYPE 0: C51 V9.55
   c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main.obj (MAIN)
          COMMENT TYPE 0: C51 V9.55
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C_STARTUP)
+  C:\KEIL_V5\C51\LIB\C51C.LIB (?C_STARTUP)
          COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?CLDPTR)
+  C:\KEIL_V5\C51\LIB\C51C.LIB (?C?CLDPTR)
          COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?CLDOPTR)
+  C:\KEIL_V5\C51\LIB\C51C.LIB (?C?CLDOPTR)
          COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?CSTPTR)
+  C:\KEIL_V5\C51\LIB\C51C.LIB (?C?CSTPTR)
          COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?IILDX)
+  C:\KEIL_V5\C51\LIB\C51C.LIB (?C?IMUL)
          COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?ULDIV)
+  C:\KEIL_V5\C51\LIB\C51C.LIB (?C?ULDIV)
          COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?ULCMP)
+  C:\KEIL_V5\C51\LIB\C51C.LIB (?C?ULCMP)
          COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?ULSHR)
+  C:\KEIL_V5\C51\LIB\C51C.LIB (?C?ULSHR)
          COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?LLDOPTR0)
+  C:\KEIL_V5\C51\LIB\C51C.LIB (?C?LLDOPTR0)
          COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?LSTXDATA)
+  C:\KEIL_V5\C51\LIB\C51C.LIB (?C?LSTPDATA)
          COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?LSTKXDATA)
+  C:\KEIL_V5\C51\LIB\C51C.LIB (?C?LLDIDATA0)
          COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C_INIT)
+  C:\KEIL_V5\C51\LIB\C51C.LIB (?C?LLDXDATA0)
          COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?LLDIDATA0)
+  C:\KEIL_V5\C51\LIB\C51C.LIB (?C?LLDPDATA0)
          COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?LLDXDATA0)
-         COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?LLDPDATA0)
-         COMMENT TYPE 1: A51 / ASM51 Assembler
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?LLDCODE0)
+  C:\KEIL_V5\C51\LIB\C51C.LIB (?C?LLDCODE0)
          COMMENT TYPE 1: A51 / ASM51 Assembler
 
 
@@ -57,8 +53,10 @@ ACTIVE MEMORY CLASSES OF MODULE:  c:\Users\Administrator\Documents\Source\MCU\bu
 
 BASE        START       END         USED      MEMORY CLASS
 ==========================================================
-C:000000H   C:000000H   C:00FFFFH   000ADCH   CODE
-X:000000H   X:000000H   X:00FFFFH   0002BAH   XDATA
+C:000000H   C:000000H   C:00FFFFH   000597H   CODE
+X:000000H   X:000000H   X:0000FFH   00002BH   PDATA
+X:000000H   X:000000H   X:00FFFFH   000200H   XDATA
+I:000020H.0 I:000020H.0 I:00002FH.7 000000H.1 BIT
 I:000000H   I:000000H   I:0000FFH   000001H   IDATA
 I:000000H   I:000000H   I:00007FH   000008H   DATA
 
@@ -67,60 +65,80 @@ MEMORY MAP OF MODULE:  c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\m
 
 
 START     STOP      LENGTH    ALIGN  RELOC    MEMORY CLASS   SEGMENT NAME
-LX51 LINKER/LOCATER V4.66.62.0                                                        04/12/2020  17:13:53  PAGE 2
-
-
 =========================================================================
+
+LX51 LINKER/LOCATER V4.66.62.0                                                        04/15/2020  11:38:25  PAGE 2
+
 
 * * * * * * * * * * *   D A T A   M E M O R Y   * * * * * * * * * * * * *
 000000H   000007H   000008H   ---    AT..     DATA           "REG BANK 0"
 000008H   000008H   000001H   BYTE   UNIT     IDATA          ?STACK
+000009H.0 00001FH.7 000017H.0 ---    ---      **GAP**
+000020H.0 000020H.0 000000H.1 BIT    UNIT     BIT            ?BI?MAIN
 
 * * * * * * * * * * *   C O D E   M E M O R Y   * * * * * * * * * * * * *
 000000H   000002H   000003H   ---    OFFS..   CODE           ?CO??C_STARTUP?0
-000003H   000019H   000017H   BYTE   UNIT     CODE           ?PR?_DELAY_MS?MAIN
-00001AH   000022H   000009H   BYTE   UNIT     CODE           ?C_INITSEG
+000003H   000020H   00001EH   BYTE   UNIT     CODE           ?PR?_IAPREAD?MAIN
+000021H   000022H   000002H   ---    ---      **GAP**
+000023H   000025H   000003H   BYTE   OFFS..   CODE           ?MAIN?00023
+*** OVERLAP ***
 000023H   000025H   000003H   BYTE   OFFS..   CODE           ?USART?00023
-000026H   00003CH   000017H   BYTE   UNIT     CODE           ?PR?TOHOME?MAIN
-00003DH   000041H   000005H   BYTE   UNIT     CODE           ?PR?DELAY1US?MAIN
-000042H   000042H   000001H   ---    ---      **GAP**
+000026H   00003FH   00001AH   BYTE   UNIT     CODE           ?PR?_IAPPROGRAM?MAIN
+000040H   000042H   000003H   ---    ---      **GAP**
 000043H   000045H   000003H   BYTE   OFFS..   CODE           ?USART?00043
-000046H   0003BFH   00037AH   BYTE   UNIT     CODE           ?PR?_USART_CONFIGURATION?USART
-0003C0H   0005C2H   000203H   BYTE   UNIT     CODE           ?C?LIB_CODE
-0005C3H   000684H   0000C2H   BYTE   UNIT     CODE           ?PR?_UART_HANDLE?MAIN
-000685H   000711H   00008DH   BYTE   UNIT     CODE           ?PR?_RUNMOTOR?MAIN
-000712H   00079DH   00008CH   BYTE   UNIT     CODE           ?C_C51STARTUP
-00079EH   000822H   000085H   BYTE   UNIT     CODE           ?PR?UART2_INT?USART
-000823H   0008A1H   00007FH   BYTE   UNIT     CODE           ?PR?UART1_INT?USART
-0008A2H   000901H   000060H   BYTE   UNIT     CODE           ?PR?ROM_INIT?MAIN
-000902H   000960H   00005FH   BYTE   UNIT     CODE           ?PR?_UART_READ?MAIN
-000961H   0009ACH   00004CH   BYTE   UNIT     CODE           ?PR?ISBUTTONON?MAIN
-0009ADH   0009EEH   000042H   BYTE   UNIT     CODE           ?PR?MAIN?MAIN
-0009EFH   000A2DH   00003FH   BYTE   UNIT     CODE           ?PR?_EEPROM_READ_N?EEPROM
-000A2EH   000A6CH   00003FH   BYTE   UNIT     CODE           ?PR?_EEPROM_WRITE_N?EEPROM
-000A6DH   000A96H   00002AH   BYTE   UNIT     CODE           ?PR?UART_INIT?MAIN
-000A97H   000AB9H   000023H   BYTE   UNIT     CODE           ?PR?RUN?MAIN
-000ABAH   000ACEH   000015H   BYTE   UNIT     CODE           ?PR?DELAY100US?MAIN
-000ACFH   000ADCH   00000EH   BYTE   UNIT     CODE           ?PR?DISABLEEEPROM?EEPROM
+000046H   000213H   0001CEH   BYTE   UNIT     CODE           ?C?LIB_CODE
+000214H   000290H   00007DH   BYTE   UNIT     CODE           ?PR?UART2_INT?USART
+000291H   000307H   000077H   BYTE   UNIT     CODE           ?PR?UART1_INT?USART
+000308H   000378H   000071H   BYTE   UNIT     CODE           ?PR?_RUNMOTOR?MAIN
+000379H   0003D0H   000058H   BYTE   UNIT     CODE           ?PR?_UART_HANDLE?MAIN
+0003D1H   00040CH   00003CH   BYTE   UNIT     CODE           ?PR?TOHOME?MAIN
+00040DH   000445H   000039H   BYTE   UNIT     CODE           ?PR?MAIN?MAIN
+000446H   000478H   000033H   BYTE   UNIT     CODE           ?PR?UARTISR?MAIN
+000479H   0004A6H   00002EH   BYTE   UNIT     CODE           ?PR?RUN?MAIN
+0004A7H   0004D0H   00002AH   BYTE   UNIT     CODE           ?PR?_DELAY_MS?MAIN
+0004D1H   0004F4H   000024H   BYTE   UNIT     CODE           ?PR?_UART_READ?MAIN
+0004F5H   000515H   000021H   BYTE   UNIT     CODE           ?PR?ROM_WRITE?MAIN
+000516H   00052FH   00001AH   BYTE   UNIT     CODE           ?PR?DELAY100US?MAIN
+000530H   000548H   000019H   BYTE   UNIT     CODE           ?PR?UARTINIT?MAIN
+000549H   00055EH   000016H   BYTE   UNIT     CODE           ?PR?_IAPERASE?MAIN
+00055FH   000572H   000014H   BYTE   UNIT     CODE           ?PR?ROM_INIT?MAIN
+000573H   00057FH   00000DH   BYTE   UNIT     CODE           ?PR?IAPIDLE?MAIN
+000580H   00058BH   00000CH   BYTE   UNIT     CODE           ?C_C51STARTUP
+00058CH   000593H   000008H   BYTE   UNIT     CODE           ?PR?_UARTSEND?MAIN
+000594H   000598H   000005H   BYTE   UNIT     CODE           ?PR?DELAY1US?MAIN
 
 * * * * * * * * * * *  X D A T A   M E M O R Y  * * * * * * * * * * * * *
-000000H   00020DH   00020EH   BYTE   UNIT     XDATA          ?XD?USART
-00020EH   0002A3H   000096H   BYTE   UNIT     XDATA          ?XD?MAIN
-0002A4H   0002B9H   000016H   BYTE   UNIT     XDATA          _XDATA_GROUP_
+000000H   00001BH   00001CH   BYTE   INPAGE   PDATA          ?PD?MAIN
+00001CH   000029H   00000EH   BYTE   INPAGE   PDATA          ?PD?USART
+00002AH   00002AH   000001H   BYTE   INPAGE   PDATA          _PDATA_GROUP_
+00002BH   00022AH   000200H   BYTE   UNIT     XDATA          ?XD?USART
 
 * * * * * * * * *   R E M O V E D     S E G M E N T S   * * * * * * * *
-   *DEL*:           000027H   BYTE   UNIT     CODE           ?PR?_TX1_WRITE2BUFF?USART
-   *DEL*:           000028H   BYTE   UNIT     CODE           ?PR?_TX2_WRITE2BUFF?USART
+   *DEL*:           000351H   BYTE   UNIT     CODE           ?PR?_USART_CONFIGURATION?USART
+   *DEL*:           000009H   BYTE   INPAGE   PDATA          ?PD?_USART_CONFIGURATION?USART
+   *DEL*:           000022H   BYTE   UNIT     CODE           ?PR?_TX1_WRITE2BUFF?USART
+   *DEL*:           000023H   BYTE   UNIT     CODE           ?PR?_TX2_WRITE2BUFF?USART
    *DEL*:           000013H   BYTE   UNIT     CODE           ?PR?_PRINTSTRING1?USART
    *DEL*:           000013H   BYTE   UNIT     CODE           ?PR?_PRINTSTRING2?USART
+   *DEL*:           00000EH   BYTE   UNIT     CODE           ?PR?DISABLEEEPROM?EEPROM
+   *DEL*:           000041H   BYTE   UNIT     CODE           ?PR?_EEPROM_READ_N?EEPROM
+   *DEL*:           000007H   BYTE   INPAGE   PDATA          ?PD?_EEPROM_READ_N?EEPROM
    *DEL*:           000020H   BYTE   UNIT     CODE           ?PR?_EEPROM_SECTORERASE?EEPROM
+   *DEL*:           000041H   BYTE   UNIT     CODE           ?PR?_EEPROM_WRITE_N?EEPROM
+   *DEL*:           000007H   BYTE   INPAGE   PDATA          ?PD?_EEPROM_WRITE_N?EEPROM
+   *DEL*:           000034H   BYTE   UNIT     CODE           ?PR?_UARTSENDSTR?MAIN
+   *DEL*:           000003H   BYTE   INPAGE   PDATA          ?PD?_UARTSENDSTR?MAIN
+   *DEL*:           000048H   BYTE   UNIT     CODE           ?PR?ISBUTTONON?MAIN
 
 
 
 OVERLAY MAP OF MODULE:   c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main (USART)
 
 
-FUNCTION/MODULE                 XDATA_GROUP
+LX51 LINKER/LOCATER V4.66.62.0                                                        04/15/2020  11:38:25  PAGE 3
+
+
+FUNCTION/MODULE                 PDATA_GROUP
 --> CALLED FUNCTION/MODULE      START  STOP
 ===========================================
 UART1_INT/USART                 ----- -----
@@ -131,68 +149,76 @@ UART2_INT/USART                 ----- -----
 
 *** NEW ROOT ******************
 
+UARTISR/MAIN                    ----- -----
+
+*** NEW ROOT ******************
+
 ?C_C51STARTUP                   ----- -----
   +--> MAIN/MAIN
-  +--> ?C_INITSEG
-
-LX51 LINKER/LOCATER V4.66.62.0                                                        04/12/2020  17:13:53  PAGE 3
-
 
 MAIN/MAIN                       ----- -----
   +--> _DELAY_MS/MAIN
-  +--> UART_INIT/MAIN
+  +--> UARTINIT/MAIN
   +--> ROM_INIT/MAIN
   +--> TOHOME/MAIN
-  +--> ISBUTTONON/MAIN
   +--> RUN/MAIN
   +--> _UART_READ/MAIN
 
 _DELAY_MS/MAIN                  ----- -----
-
-UART_INIT/MAIN                  02A4H 02B0H
-  +--> _USART_CONFIGURATION/USART
-
-_USART_CONFIGURATION/USART      02B1H 02B9H
-
-ROM_INIT/MAIN                   ----- -----
-  +--> _EEPROM_READ_N/EEPROM
-
-_EEPROM_READ_N/EEPROM           02A5H 02ABH
-  +--> DISABLEEEPROM/EEPROM
-
-DISABLEEEPROM/EEPROM            ----- -----
-
-TOHOME/MAIN                     ----- -----
-  +--> _RUNMOTOR/MAIN
+  +--> _IAPREAD/MAIN
   +--> DELAY100US/MAIN
+  +--> _UARTSEND/MAIN
 
-_RUNMOTOR/MAIN                  ----- -----
-  +--> DELAY1US/MAIN
+_IAPREAD/MAIN                   ----- -----
+  +--> IAPIDLE/MAIN
 
-DELAY1US/MAIN                   ----- -----
+IAPIDLE/MAIN                    ----- -----
 
 DELAY100US/MAIN                 ----- -----
 
-ISBUTTONON/MAIN                 ----- -----
+_UARTSEND/MAIN                  ----- -----
+
+UARTINIT/MAIN                   ----- -----
+
+ROM_INIT/MAIN                   ----- -----
+  +--> _IAPREAD/MAIN
+
+TOHOME/MAIN                     ----- -----
   +--> DELAY100US/MAIN
 
 RUN/MAIN                        ----- -----
   +--> _DELAY_MS/MAIN
   +--> _RUNMOTOR/MAIN
   +--> TOHOME/MAIN
+  +--> DELAY100US/MAIN
+  +--> ROM_WRITE/MAIN
 
-_UART_READ/MAIN                 02A4H 02A4H
+_RUNMOTOR/MAIN                  ----- -----
+  +--> DELAY1US/MAIN
+
+DELAY1US/MAIN                   ----- -----
+
+ROM_WRITE/MAIN                  ----- -----
+  +--> _IAPERASE/MAIN
+  +--> DELAY100US/MAIN
+  +--> _IAPPROGRAM/MAIN
+
+LX51 LINKER/LOCATER V4.66.62.0                                                        04/15/2020  11:38:25  PAGE 4
+
+
+_IAPERASE/MAIN                  ----- -----
+  +--> IAPIDLE/MAIN
+
+_IAPPROGRAM/MAIN                ----- -----
+  +--> IAPIDLE/MAIN
+
+_UART_READ/MAIN                 002AH 002AH
   +--> DELAY100US/MAIN
   +--> _UART_HANDLE/MAIN
 
 _UART_HANDLE/MAIN               ----- -----
-  +--> _EEPROM_READ_N/EEPROM
-  +--> _EEPROM_WRITE_N/EEPROM
-
-_EEPROM_WRITE_N/EEPROM          02A5H 02ABH
-  +--> DISABLEEEPROM/EEPROM
-
-?C_INITSEG                      ----- -----
+  +--> _DELAY_MS/MAIN
+  +--> _UARTSEND/MAIN
 
 
 
@@ -201,257 +227,256 @@ PUBLIC SYMBOLS OF MODULE:  c:\Users\Administrator\Documents\Source\MCU\bujin\.\o
 
       VALUE       CLASS    TYPE      PUBLIC SYMBOL NAME
       =================================================
-      020002A5H   XDATA    BYTE      ?_EEPROM_read_n?BYTE
-      020002A5H   XDATA    BYTE      ?_EEPROM_write_n?BYTE
-LX51 LINKER/LOCATER V4.66.62.0                                                        04/12/2020  17:13:53  PAGE 4
-
-
-      010003D9H   CODE     ---       ?C?CLDOPTR
-      010003C0H   CODE     ---       ?C?CLDPTR
+*DEL*:00000000H   PDATA    BYTE      ?_EEPROM_read_n?BYTE
+*DEL*:00000000H   PDATA    BYTE      ?_EEPROM_write_n?BYTE
+      0100005FH   CODE     ---       ?C?CLDOPTR
+      01000046H   CODE     ---       ?C?CLDPTR
       00000000H   NUMBER   ---       ?C?CODESEG
-      01000406H   CODE     ---       ?C?CSTPTR
-      01000418H   CODE     ---       ?C?IILDX
-      010005B3H   CODE     ---       ?C?LLDCODE0
-      0100058DH   CODE     ---       ?C?LLDIDATA0
-      01000520H   CODE     ---       ?C?LLDOPTR0
-      010005A6H   CODE     ---       ?C?LLDPDATA0
-      0100059AH   CODE     ---       ?C?LLDXDATA0
-      0100055CH   CODE     ---       ?C?LSTKXDATA
-      01000550H   CODE     ---       ?C?LSTXDATA
-      010004FCH   CODE     ---       ?C?ULCMP
-      0100046AH   CODE     ---       ?C?ULDIV
-      0100050DH   CODE     ---       ?C?ULSHR
+      0100008CH   CODE     ---       ?C?CSTPTR
+      0100009EH   CODE     ---       ?C?IMUL
+      01000204H   CODE     ---       ?C?LLDCODE0
+      010001DEH   CODE     ---       ?C?LLDIDATA0
+      010001A2H   CODE     ---       ?C?LLDOPTR0
+      010001F7H   CODE     ---       ?C?LLDPDATA0
+      010001EBH   CODE     ---       ?C?LLDXDATA0
+      010001D2H   CODE     ---       ?C?LSTPDATA
+      0100017EH   CODE     ---       ?C?ULCMP
+      010000ECH   CODE     ---       ?C?ULDIV
+      0100018FH   CODE     ---       ?C?ULSHR
       00000000H   NUMBER   ---       ?C?XDATASEG
-      01000759H   CODE     ---       ?C_START
+      0100040DH   CODE     ---       ?C_START
       01000000H   CODE     ---       ?C_STARTUP
-      01000003H   CODE     ---       _delay_ms
-      010009EFH   CODE     ---       _EEPROM_read_n
+      010004BAH   CODE     ---       _delay_ms
+*DEL*:00000000H   CODE     ---       _EEPROM_read_n
 *DEL*:00000000H   CODE     ---       _EEPROM_SectorErase
-      01000A2EH   CODE     ---       _EEPROM_write_n
+*DEL*:00000000H   CODE     ---       _EEPROM_write_n
+      01000549H   CODE     ---       _IapErase
+      01000026H   CODE     ---       _IapProgram
+      01000003H   CODE     ---       _IapRead
 *DEL*:00000000H   CODE     ---       _PrintString1
 *DEL*:00000000H   CODE     ---       _PrintString2
-      01000685H   CODE     ---       _Runmotor
+      01000308H   CODE     ---       _Runmotor
 *DEL*:00000000H   CODE     ---       _TX1_write2buff
 *DEL*:00000000H   CODE     ---       _TX2_write2buff
-      010005C3H   CODE     ---       _UART_Handle
-      01000902H   CODE     ---       _UART_Read
-      01000046H   CODE     ---       _USART_Configuration
-      02000257H   XDATA    BYTE      Button1
-      02000258H   XDATA    BYTE      Button2
-      02000000H   XDATA    ---       COM1
-      02000007H   XDATA    ---       COM2
-      02000255H   XDATA    ---       datas
-      0200029BH   XDATA    WORD      dd
-      01000AC6H   CODE     ---       Delay100us
-      0100003DH   CODE     ---       Delay1us
-      0200029DH   XDATA    BYTE      dh
-      01000ACFH   CODE     ---       DisableEEPROM
-      0200029EH   XDATA    BYTE      dl
-      020002A3H   XDATA    BYTE      Flags
-      020002A1H   XDATA    WORD      i
-      0200029FH   XDATA    WORD      ii
-      01000961H   CODE     ---       Isbuttonon
-      010009ADH   CODE     ---       main
-      02000253H   XDATA    WORD      MotorCycle
-      02000259H   XDATA    WORD      MotorHZ
-      010008A2H   CODE     ---       Rom_Init
-      01000A97H   CODE     ---       Run
-      0200000EH   XDATA    ---       RX1_Buffer
-      0200008EH   XDATA    ---       RX2_Buffer
-      0200020EH   XDATA    ---       Status
-      0200025BH   XDATA    ---       temp
-      01000026H   CODE     ---       Tohome
-      0200010EH   XDATA    ---       TX1_Buffer
-      0200018EH   XDATA    ---       TX2_Buffer
-      01000823H   CODE     ---       UART1_int
-      0100079EH   CODE     ---       UART2_int
-      01000A6DH   CODE     ---       UART_Init
+      01000379H   CODE     ---       _UART_Handle
+      010004D1H   CODE     ---       _UART_Read
+      0100058CH   CODE     ---       _UartSend
+*DEL*:00000000H   CODE     ---       _UartSendStr
+*DEL*:00000000H   CODE     ---       _USART_Configuration
+      0200000CH   PDATA    ---       buffer
+      00000020H.0 BIT      BIT       busy
+      02000002H   PDATA    BYTE      Button1
+      02000003H   PDATA    BYTE      Button2
+      0200001CH   PDATA    ---       COM1
+      02000023H   PDATA    ---       COM2
+      02000009H   PDATA    BYTE      databit
+      01000527H   CODE     ---       Delay100us
+LX51 LINKER/LOCATER V4.66.62.0                                                        04/15/2020  11:38:25  PAGE 5
+
+
+      01000594H   CODE     ---       Delay1us
+*DEL*:00000000H   CODE     ---       DisableEEPROM
+      02000001H   PDATA    BYTE      flag
+      0200000AH   PDATA    WORD      i
+      01000573H   CODE     ---       IapIdle
+      02000006H   PDATA    WORD      ii
+*DEL*:00000000H   CODE     ---       Isbuttonon
+      0100040DH   CODE     ---       main
+      02000000H   PDATA    BYTE      MotorCycle
+      02000008H   PDATA    BYTE      MotorHz
+      0100055FH   CODE     ---       Rom_Init
+      010004F5H   CODE     ---       ROM_Write
+      02000004H   PDATA    CHAR      rptr
+      01000479H   CODE     ---       Run
+      0200002BH   XDATA    ---       RX1_Buffer
+      020000ABH   XDATA    ---       RX2_Buffer
+      010003D1H   CODE     ---       Tohome
+      0200012BH   XDATA    ---       TX1_Buffer
+      020001ABH   XDATA    ---       TX2_Buffer
+      01000291H   CODE     ---       UART1_int
+      01000214H   CODE     ---       UART2_int
+      01000530H   CODE     ---       UartInit
+      01000446H   CODE     ---       UartIsr
+      02000005H   PDATA    CHAR      wptr
 
 
 
 SYMBOL TABLE OF MODULE:  c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main (USART)
 
-LX51 LINKER/LOCATER V4.66.62.0                                                        04/12/2020  17:13:53  PAGE 5
-
-
       VALUE       REP       CLASS    TYPE      SYMBOL NAME
       ====================================================
       ---         MODULE    ---      ---       USART
-      0200018EH   PUBLIC    XDATA    ---       TX2_Buffer
-      0200010EH   PUBLIC    XDATA    ---       TX1_Buffer
-      0200008EH   PUBLIC    XDATA    ---       RX2_Buffer
-      0200000EH   PUBLIC    XDATA    ---       RX1_Buffer
-      02000007H   PUBLIC    XDATA    ---       COM2
-      02000000H   PUBLIC    XDATA    ---       COM1
-      0100079EH   PUBLIC    CODE     ---       UART2_int
-      01000823H   PUBLIC    CODE     ---       UART1_int
-      01000046H   PUBLIC    CODE     ---       _USART_Configuration
+      020001ABH   PUBLIC    XDATA    ---       TX2_Buffer
+      0200012BH   PUBLIC    XDATA    ---       TX1_Buffer
+      020000ABH   PUBLIC    XDATA    ---       RX2_Buffer
+      0200002BH   PUBLIC    XDATA    ---       RX1_Buffer
+      02000023H   PUBLIC    PDATA    ---       COM2
+      0200001CH   PUBLIC    PDATA    ---       COM1
+      01000214H   PUBLIC    CODE     ---       UART2_int
+      01000291H   PUBLIC    CODE     ---       UART1_int
 
-      01000046H   BLOCK     CODE     ---       LVL=0
-      01000056H   BLOCK     CODE     NEAR LAB  LVL=1
-      020002B5H   SYMBOL    XDATA    VOID      i
-      020002B6H   SYMBOL    XDATA    VOID      j
-      ---         BLOCKEND  ---      ---       LVL=1
+      01000291H   BLOCK     CODE     ---       LVL=0
       ---         BLOCKEND  ---      ---       LVL=0
 
-      01000823H   BLOCK     CODE     ---       LVL=0
-      ---         BLOCKEND  ---      ---       LVL=0
-
-      0100079EH   BLOCK     CODE     ---       LVL=0
+      01000214H   BLOCK     CODE     ---       LVL=0
       ---         BLOCKEND  ---      ---       LVL=0
 
       ---         MODULE    ---      ---       EEPROM
-      020002A5H   PUBLIC    XDATA    BYTE      ?_EEPROM_write_n?BYTE
-      01000A2EH   PUBLIC    CODE     ---       _EEPROM_write_n
-      020002A5H   PUBLIC    XDATA    BYTE      ?_EEPROM_read_n?BYTE
-      010009EFH   PUBLIC    CODE     ---       _EEPROM_read_n
-      01000ACFH   PUBLIC    CODE     ---       DisableEEPROM
-
-      01000ACFH   BLOCK     CODE     ---       LVL=0
-      ---         BLOCKEND  ---      ---       LVL=0
-
-      010009EFH   BLOCK     CODE     ---       LVL=0
-      ---         BLOCKEND  ---      ---       LVL=0
-
-      01000A2EH   BLOCK     CODE     ---       LVL=0
-      ---         BLOCKEND  ---      ---       LVL=0
 
       ---         MODULE    ---      ---       MAIN
-      020002A3H   PUBLIC    XDATA    BYTE      Flags
-      020002A1H   PUBLIC    XDATA    WORD      i
-      0200029FH   PUBLIC    XDATA    WORD      ii
-      0200029EH   PUBLIC    XDATA    BYTE      dl
-      0200029DH   PUBLIC    XDATA    BYTE      dh
-      0200029BH   PUBLIC    XDATA    WORD      dd
-      0200025BH   PUBLIC    XDATA    ---       temp
-      02000259H   PUBLIC    XDATA    WORD      MotorHZ
-      02000258H   PUBLIC    XDATA    BYTE      Button2
-      02000257H   PUBLIC    XDATA    BYTE      Button1
-      02000255H   PUBLIC    XDATA    ---       datas
-      02000253H   PUBLIC    XDATA    WORD      MotorCycle
-      0200020EH   PUBLIC    XDATA    ---       Status
-      01000961H   PUBLIC    CODE     ---       Isbuttonon
-      010005C3H   PUBLIC    CODE     ---       _UART_Handle
-      010008A2H   PUBLIC    CODE     ---       Rom_Init
-      01000A6DH   PUBLIC    CODE     ---       UART_Init
-      01000902H   PUBLIC    CODE     ---       _UART_Read
-      01000026H   PUBLIC    CODE     ---       Tohome
-      01000685H   PUBLIC    CODE     ---       _Runmotor
-      01000A97H   PUBLIC    CODE     ---       Run
-      010009ADH   PUBLIC    CODE     ---       main
-LX51 LINKER/LOCATER V4.66.62.0                                                        04/12/2020  17:13:53  PAGE 6
+      0200000CH   PUBLIC    PDATA    ---       buffer
+      0200000AH   PUBLIC    PDATA    WORD      i
+      02000009H   PUBLIC    PDATA    BYTE      databit
+      02000008H   PUBLIC    PDATA    BYTE      MotorHz
+      02000006H   PUBLIC    PDATA    WORD      ii
+      02000005H   PUBLIC    PDATA    CHAR      wptr
+      02000004H   PUBLIC    PDATA    CHAR      rptr
+      00000020H.0 PUBLIC    BIT      BIT       busy
+      02000003H   PUBLIC    PDATA    BYTE      Button2
+      02000002H   PUBLIC    PDATA    BYTE      Button1
+      02000001H   PUBLIC    PDATA    BYTE      flag
+      02000000H   PUBLIC    PDATA    BYTE      MotorCycle
+      0100040DH   PUBLIC    CODE     ---       main
+      010004F5H   PUBLIC    CODE     ---       ROM_Write
+      01000379H   PUBLIC    CODE     ---       _UART_Handle
+LX51 LINKER/LOCATER V4.66.62.0                                                        04/15/2020  11:38:25  PAGE 6
 
 
-      0100003DH   PUBLIC    CODE     ---       Delay1us
-      01000AC6H   PUBLIC    CODE     ---       Delay100us
-      01000003H   PUBLIC    CODE     ---       _delay_ms
+      0100055FH   PUBLIC    CODE     ---       Rom_Init
+      010004D1H   PUBLIC    CODE     ---       _UART_Read
+      010003D1H   PUBLIC    CODE     ---       Tohome
+      01000308H   PUBLIC    CODE     ---       _Runmotor
+      01000479H   PUBLIC    CODE     ---       Run
+      01000594H   PUBLIC    CODE     ---       Delay1us
+      01000527H   PUBLIC    CODE     ---       Delay100us
+      010004BAH   PUBLIC    CODE     ---       _delay_ms
+      01000549H   PUBLIC    CODE     ---       _IapErase
+      01000026H   PUBLIC    CODE     ---       _IapProgram
+      01000003H   PUBLIC    CODE     ---       _IapRead
+      01000573H   PUBLIC    CODE     ---       IapIdle
+      0100058CH   PUBLIC    CODE     ---       _UartSend
+      01000530H   PUBLIC    CODE     ---       UartInit
+      01000446H   PUBLIC    CODE     ---       UartIsr
+
+      01000446H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000530H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      0100058CH   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000573H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
 
       01000003H   BLOCK     CODE     ---       LVL=0
-      01000003H   BLOCK     CODE     NEAR LAB  LVL=1
-      00000004H   SYMBOL    DATA     VOID      i
-      ---         BLOCKEND  ---      ---       LVL=1
-      ---         BLOCKEND  ---      ---       LVL=0
-
-      01000ABAH   BLOCK     CODE     ---       LVL=0
-      ---         BLOCKEND  ---      ---       LVL=0
-
-      01000AC6H   BLOCK     CODE     ---       LVL=0
-      01000AC6H   BLOCK     CODE     NEAR LAB  LVL=1
-      00000007H   SYMBOL    DATA     VOID      i
-      00000006H   SYMBOL    DATA     VOID      j
-      ---         BLOCKEND  ---      ---       LVL=1
-      ---         BLOCKEND  ---      ---       LVL=0
-
-      0100003DH   BLOCK     CODE     ---       LVL=0
-      0100003DH   BLOCK     CODE     NEAR LAB  LVL=1
-      00000007H   SYMBOL    DATA     VOID      i
-      ---         BLOCKEND  ---      ---       LVL=1
-      ---         BLOCKEND  ---      ---       LVL=0
-
-      010009ADH   BLOCK     CODE     ---       LVL=0
-      ---         BLOCKEND  ---      ---       LVL=0
-
-      01000A97H   BLOCK     CODE     ---       LVL=0
-      ---         BLOCKEND  ---      ---       LVL=0
-
-      01000685H   BLOCK     CODE     ---       LVL=0
       ---         BLOCKEND  ---      ---       LVL=0
 
       01000026H   BLOCK     CODE     ---       LVL=0
       ---         BLOCKEND  ---      ---       LVL=0
 
-      01000902H   BLOCK     CODE     ---       LVL=0
+      01000549H   BLOCK     CODE     ---       LVL=0
       ---         BLOCKEND  ---      ---       LVL=0
 
-      01000A6DH   BLOCK     CODE     ---       LVL=0
-      01000A6DH   BLOCK     CODE     NEAR LAB  LVL=1
-      020002A4H   SYMBOL    XDATA    VOID      COMx_InitStructure
+      010004A7H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010004BAH   BLOCK     CODE     ---       LVL=0
+      010004BAH   BLOCK     CODE     NEAR LAB  LVL=1
+      00000004H   SYMBOL    DATA     VOID      i
       ---         BLOCKEND  ---      ---       LVL=1
       ---         BLOCKEND  ---      ---       LVL=0
 
-      010008A2H   BLOCK     CODE     ---       LVL=0
+      01000516H   BLOCK     CODE     ---       LVL=0
       ---         BLOCKEND  ---      ---       LVL=0
 
-      010005C3H   BLOCK     CODE     ---       LVL=0
+      01000527H   BLOCK     CODE     ---       LVL=0
+      01000527H   BLOCK     CODE     NEAR LAB  LVL=1
+      00000007H   SYMBOL    DATA     VOID      i
+      00000006H   SYMBOL    DATA     VOID      j
+      ---         BLOCKEND  ---      ---       LVL=1
       ---         BLOCKEND  ---      ---       LVL=0
 
-      01000961H   BLOCK     CODE     ---       LVL=0
-      01000961H   BLOCK     CODE     NEAR LAB  LVL=1
+      01000594H   BLOCK     CODE     ---       LVL=0
+      01000594H   BLOCK     CODE     NEAR LAB  LVL=1
+      00000007H   SYMBOL    DATA     VOID      i
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000479H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+LX51 LINKER/LOCATER V4.66.62.0                                                        04/15/2020  11:38:25  PAGE 7
+
+
+      01000308H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010003D1H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010004D1H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      0100055FH   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000379H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
       00000004H   SYMBOL    DATA     VOID      cc
       00000005H   SYMBOL    DATA     VOID      ccc
-      ---         BLOCKEND  ---      ---       LVL=1
+
+      010004F5H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      0100040DH   BLOCK     CODE     ---       LVL=0
       ---         BLOCKEND  ---      ---       LVL=0
 
       ---         MODULE    ---      ---       ?C_STARTUP
       01000000H   PUBLIC    CODE     ---       ?C_STARTUP
 
       ---         MODULE    ---      ---       ?C?CLDPTR
-      010003C0H   PUBLIC    CODE     ---       ?C?CLDPTR
-LX51 LINKER/LOCATER V4.66.62.0                                                        04/12/2020  17:13:53  PAGE 7
-
-
+      01000046H   PUBLIC    CODE     ---       ?C?CLDPTR
 
       ---         MODULE    ---      ---       ?C?CLDOPTR
-      010003D9H   PUBLIC    CODE     ---       ?C?CLDOPTR
+      0100005FH   PUBLIC    CODE     ---       ?C?CLDOPTR
 
       ---         MODULE    ---      ---       ?C?CSTPTR
-      01000406H   PUBLIC    CODE     ---       ?C?CSTPTR
+      0100008CH   PUBLIC    CODE     ---       ?C?CSTPTR
 
-      ---         MODULE    ---      ---       ?C?IILDX
-      01000418H   PUBLIC    CODE     ---       ?C?IILDX
+      ---         MODULE    ---      ---       ?C?IMUL
+      0100009EH   PUBLIC    CODE     ---       ?C?IMUL
 
       ---         MODULE    ---      ---       ?C?ULDIV
-      0100046AH   PUBLIC    CODE     ---       ?C?ULDIV
+      010000ECH   PUBLIC    CODE     ---       ?C?ULDIV
 
       ---         MODULE    ---      ---       ?C?ULCMP
-      010004FCH   PUBLIC    CODE     ---       ?C?ULCMP
+      0100017EH   PUBLIC    CODE     ---       ?C?ULCMP
 
       ---         MODULE    ---      ---       ?C?ULSHR
-      0100050DH   PUBLIC    CODE     ---       ?C?ULSHR
+      0100018FH   PUBLIC    CODE     ---       ?C?ULSHR
 
       ---         MODULE    ---      ---       ?C?LLDOPTR0
-      01000520H   PUBLIC    CODE     ---       ?C?LLDOPTR0
+      010001A2H   PUBLIC    CODE     ---       ?C?LLDOPTR0
 
-      ---         MODULE    ---      ---       ?C?LSTXDATA
-      01000550H   PUBLIC    CODE     ---       ?C?LSTXDATA
-
-      ---         MODULE    ---      ---       ?C?LSTKXDATA
-      0100055CH   PUBLIC    CODE     ---       ?C?LSTKXDATA
-
-      ---         MODULE    ---      ---       ?C_INIT
-      01000759H   PUBLIC    CODE     ---       ?C_START
+      ---         MODULE    ---      ---       ?C?LSTPDATA
+      010001D2H   PUBLIC    CODE     ---       ?C?LSTPDATA
 
       ---         MODULE    ---      ---       ?C?LLDIDATA0
-      0100058DH   PUBLIC    CODE     ---       ?C?LLDIDATA0
+      010001DEH   PUBLIC    CODE     ---       ?C?LLDIDATA0
 
       ---         MODULE    ---      ---       ?C?LLDXDATA0
-      0100059AH   PUBLIC    CODE     ---       ?C?LLDXDATA0
+      010001EBH   PUBLIC    CODE     ---       ?C?LLDXDATA0
 
       ---         MODULE    ---      ---       ?C?LLDPDATA0
-      010005A6H   PUBLIC    CODE     ---       ?C?LLDPDATA0
+      010001F7H   PUBLIC    CODE     ---       ?C?LLDPDATA0
 
       ---         MODULE    ---      ---       ?C?LLDCODE0
-      010005B3H   PUBLIC    CODE     ---       ?C?LLDCODE0
+      01000204H   PUBLIC    CODE     ---       ?C?LLDCODE0
+
+LX51 LINKER/LOCATER V4.66.62.0                                                        04/15/2020  11:38:25  PAGE 8
+
 
 
 
@@ -462,26 +487,38 @@ FUNCTION . . . . . . . . REG MASK
 ==================================
 
 _delay_ms. . . . . . . . @0x080008f0
-_EEPROM_read_n . . . . . @0x1e000cb7
+_EEPROM_read_n . . . . . @0x1e0008b7
 _EEPROM_SectorErase. . . @0x080008b0
-_EEPROM_write_n. . . . . @0x1e000cb7
-_PrintString1. . . . . . @0x1e000886
-_PrintString2. . . . . . @0x1e000886
-_Runmotor. . . . . . . . @0x1e0008f0
-_TX1_write2buff. . . . . @0x1e000800
-_TX2_write2buff. . . . . @0x1e000800
-_UART_Handle . . . . . . @0x1e000cff
+_EEPROM_write_n. . . . . @0x1e0008b7
+_IapErase. . . . . . . . @0x18000880
+_IapProgram. . . . . . . @0x18000880
+_IapRead . . . . . . . . @0x18000881
+_PrintString1. . . . . . @0x1e000887
+_PrintString2. . . . . . @0x1e000887
+_Runmotor. . . . . . . . @0x180008b1
+_TX1_write2buff. . . . . @0x1e000801
+_TX2_write2buff. . . . . @0x1e000801
+_UART_Handle . . . . . . @0x180008f1
+_UartSend. . . . . . . . @0x80000000
+_UartSendStr . . . . . . @0x1e00088f
 Delay100us . . . . . . . @0x080000c0
 Delay1us . . . . . . . . @0x08000080
 DisableEEPROM. . . . . . @0x08000800
-Isbuttonon . . . . . . . @0x1e0008f0
-LX51 LINKER/LOCATER V4.66.62.0                                                        04/12/2020  17:13:53  PAGE 8
+IapIdle. . . . . . . . . @0x08000800
+Isbuttonon . . . . . . . @0x180008f1
+Rom_Init . . . . . . . . @0x180008c1
+ROM_Write. . . . . . . . @0x180008e1
+Tohome . . . . . . . . . @0x180008c1
+UART1_int. . . . . . . . @0x1e0008c1
+UART2_int. . . . . . . . @0x1e0008c1
+UartInit . . . . . . . . @0x08000801
+UartIsr. . . . . . . . . @0x18000881
 
 
-Rom_Init . . . . . . . . @0x1e000cff
-Tohome . . . . . . . . . @0x1e0008f0
-UART1_int. . . . . . . . @0x1e0008c0
-UART2_int. . . . . . . . @0x1e0008c0
 
-Program Size: data=9.0 xdata=698 const=0 code=2780
-LX51 RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
+*** WARNING L30: MEMORY SPACE OVERLAP
+    FROM:    C:000023H   
+    TO:      C:000026H   
+
+Program Size: data=9.1 xdata=555 const=0 code=1431
+LX51 RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

@@ -1,8 +1,121 @@
 #include "C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\stc8.h"
 #include <C:\Keil_v5\C51\INC\intrins.h>
 #include "C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\USART.h"
-//#include "C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\timer.h"
 #include "C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\EEPROM.h"
+#include <C:\Keil_v5\C51\INC\stdlib.h>
+#include <C:\Keil_v5\C51\INC\string.h>
+
+
+#define BRT             (65536 - MAIN_Fosc / 115200 / 4)
+bit busy;
+char wptr;
+char rptr;
+char buffer[16];
+
+unsigned char databit;
+
+void UartIsr() interrupt 4
+{
+     if (TI)
+     {
+          TI = 0;
+          busy = 0;
+     }
+     if (RI)
+     {
+          RI = 0;
+          buffer[wptr++] = SBUF;
+          wptr &= 0x0f;
+     }
+}
+
+void UartInit()
+{
+     SCON = 0x50;
+     TMOD = 0x00;
+     TL1 = BRT;
+     TH1 = BRT >> 8;
+     TR1 = 1;
+     AUXR = 0x40;
+     wptr = 0x00;
+     rptr = 0x00;
+     busy = 0;
+}
+
+void UartSend(char dat)
+{
+     while (busy);
+     busy = 1;
+     SBUF = dat;
+}
+
+void UartSendStr(char *p)
+{
+     while (*p)
+     {
+          UartSend(*p++);
+     }
+}
+
+#define WT_30M          0x80
+#define WT_24M          0x81
+#define WT_20M          0x82
+#define WT_12M          0x83
+#define WT_6M           0x84
+#define WT_3M           0x85
+#define WT_2M           0x86
+#define WT_1M           0x87
+
+void IapIdle()
+{
+     IAP_CONTR = 0;                              //锟截憋拷IAP锟斤拷锟斤拷
+     IAP_CMD = 0;                                //锟斤拷锟斤拷锟斤拷锟侥达拷锟斤拷
+     IAP_TRIG = 0;                               //锟斤拷锟斤拷锟斤拷锟斤拷拇锟斤拷锟�
+     IAP_ADDRH = 0x80;                           //锟斤拷锟斤拷址锟斤拷锟矫碉拷锟斤拷IAP锟斤拷锟斤拷
+     IAP_ADDRL = 0;
+}
+
+char IapRead(int addr)
+{
+     IAP_CONTR = WT_24M;                         //使锟斤拷IAP
+     IAP_CMD = 1;                                //锟斤拷锟斤拷IAP锟斤拷锟斤拷锟斤拷
+     IAP_ADDRL = addr;                           //锟斤拷锟斤拷IAP锟酵碉拷址
+     IAP_ADDRH = addr >> 8;                      //锟斤拷锟斤拷IAP锟竭碉拷址
+     IAP_TRIG = 0x5a;                            //写锟斤拷锟斤拷锟斤拷锟斤拷(0x5a)
+     IAP_TRIG = 0xa5;                            //写锟斤拷锟斤拷锟斤拷锟斤拷(0xa5)
+     _nop_();
+     databit = IAP_DATA;                             //锟斤拷IAP锟斤拷锟斤拷
+     IapIdle();                                  //锟截憋拷IAP锟斤拷锟斤拷
+
+     return databit;
+}
+
+void IapProgram(int addr, unsigned char dat)
+{
+     IAP_CONTR = WT_24M;                         //使锟斤拷IAP
+     IAP_CMD = 2;                                //锟斤拷锟斤拷IAP写锟斤拷锟斤拷
+     IAP_ADDRL = addr;                           //锟斤拷锟斤拷IAP锟酵碉拷址
+     IAP_ADDRH = addr >> 8;                      //锟斤拷锟斤拷IAP锟竭碉拷址
+     IAP_DATA = dat;                             //写IAP锟斤拷锟斤拷
+     IAP_TRIG = 0x5a;                            //写锟斤拷锟斤拷锟斤拷锟斤拷(0x5a)
+     IAP_TRIG = 0xa5;                            //写锟斤拷锟斤拷锟斤拷锟斤拷(0xa5)
+     _nop_();
+     IapIdle();                                  //锟截憋拷IAP锟斤拷锟斤拷
+}
+
+void IapErase(int addr)
+{
+     IAP_CONTR = WT_24M;                         //使锟斤拷IAP
+     IAP_CMD = 3;                                //锟斤拷锟斤拷IAP锟斤拷锟斤拷锟斤拷锟斤拷
+     IAP_ADDRL = addr;                           //锟斤拷锟斤拷IAP锟酵碉拷址
+     IAP_ADDRH = addr >> 8;                      //锟斤拷锟斤拷IAP锟竭碉拷址
+     IAP_TRIG = 0x5a;                            //写锟斤拷锟斤拷锟斤拷锟斤拷(0x5a)
+     IAP_TRIG = 0xa5;                            //写锟斤拷锟斤拷锟斤拷锟斤拷(0xa5)
+     _nop_();                                    //
+     IapIdle();                                  //锟截憋拷IAP锟斤拷锟斤拷
+}
+
+
 
 
 sbit Y0=P2^5;
@@ -27,51 +140,58 @@ sbit X9=P3^4;
 sbit PUL=P0^6;
 sbit DIR=P0^4;
 
-enum UART_flag{MODE=1,BITS,ADDRESS,DAT,ENDBITS,RESULT}Flags;
+#define MB_CycleUp '3'
+#define MB_CycleDown '4'
+#define MB_HzDown '7'
+#define MB_HzUp '6'
 
-typedef xdata struct
-{
-     u8 mode;     //模式
-     u8 data_bits;     //数据位数
-     u8 datas[64];   //数据缓存
-     u8 data_now;   //当前数据位数
-     u8 address;  //数据地址
-     u8 flag;     //标志
-}UART_Status;
+// char Button_00[]={'[','B','N',':','0',']'};
+// char Button_01[]="[BN:1]";
+// char Button_02[]="[BN:2]";
+// char Button_03[]="[BN:3]";
+// char Button_04[]={'[','B','N',':','4',']'};
+// char Button_05[]="[BN:5]";
+// char Button_06[]="[BN:6]";
+// char Button_07[]="[BN:7]";
+// char Button_08[]="[BN:8]";
+// char Button_09[]="[BN:9]";
+// char Button_12[]="[BN:12]";
+// char Button_13[]="[BN:13]";
+
+// char Page_00[]={'P','A','G','E','0','0'};
+// char Page_01[]={'P','A','G','E','0','1'};
+// char Page_02[]={'P','A','G','E','0','2'};
+// char Page_10[]="PAGE10";
+
+// char Button_begin='[';
+// char Button_end=']';
+// char Number_begin='{';
+// char Number_end='}';
+
 
 void Runmotor(unsigned int);
 void Tohome();
 void Run();
 void	UART_Init();
-void UART_Read(u8 port);
+void UART_Read(u8);
 void UART_Handle(u8);
 //void Timer_Init(u16);
 void Rom_Init();
+void ROM_Write();
 char Isbuttonon();
+void ButtonHandle(u8);
+void CommandHandle();
 
 //TIM_InitTypeDef xdata TIM_InitStructure;					//结构定义
-u16 MotorHZ;   //马达运行频率 addres=0x0000
-u16 MotorCycle;     //马达运行圈数 addres=0x0010
-
-UART_Status Status;
+unsigned char MotorHz;   //马达运行频率 addres=0x0000
+unsigned char MotorCycle;     //马达运行圈数 addres=0x0000
 
 unsigned int i,ii;
 
-u8 Button1=0;
-u8 Button2=0;
+u8 Button1;
+u8 Button2;
 
-u16 dd;
-u8 dh,dl;
-u8 datas[2];
-u8 temp[64];
-
-#define WRITE 'w'  //写入模式
-#define READ 'r'    //读取模式
-#define ENDBIT 0x18 //结束位
-
-
-
-
+u8 flag;
 
 void  delay_ms(unsigned int ms)
 {
@@ -101,34 +221,6 @@ void Delay1us()		//@24.000MHz
 }
 
 
-
-
-int main() 
-{
-     P2=0x00;
-     P0M1=0x00;
-     P0M0=0X00;
-     P2M0=0xff;
-     P2M1=0x00;
-     delay_ms(5);
-     UART_Init();
-     delay_ms(5);
-     Rom_Init();
-     delay_ms(100);
-     Tohome();
-     while(1)
-     {
-          if(X3!=1&&X2!=0)
-          {
-               if(Isbuttonon())Run();
-          }
-          UART_Read(0);
-          Rom_Init();
-     }
-
-     return 0;
-}
-
 void Run()
 {
      Y0=1;
@@ -137,20 +229,22 @@ void Run()
           if(X2==0)
           {
                delay_ms(10);
-               Runmotor(MotorHZ);
+               Runmotor(MotorCycle*400);
                Y0=0;
                Tohome();
                while (1)
                {
                     if(X3!=0&&X2!=0)break;
                }
+               Delay100us();
+               ROM_Write();
                return;
           }
      }
 }
 
 
-void Runmotor(unsigned int num)
+void Runmotor(u16 num)
 {
      i=0;
      ii=0;
@@ -158,12 +252,12 @@ void Runmotor(unsigned int num)
      {
           if(i>num)break;
           PUL=0;
-          for(ii=0;ii<MotorHZ;ii++)
+          for(ii=0;ii<MotorHz;ii++)
           {
                Delay1us();
           }
           PUL=1;
-          for(ii=0;ii<MotorHZ;ii++)
+          for(ii=0;ii<MotorHz;ii++)
           {
                Delay1us();
           }
@@ -173,7 +267,18 @@ void Runmotor(unsigned int num)
 
 void Tohome()
 {
-     Runmotor(100);
+     i=0;
+     for(i=0;i<100;i++)
+     {
+          PUL=0;
+          Delay100us();
+          Delay100us();
+          Delay100us();
+          PUL=1;
+          Delay100us();
+          Delay100us();
+          Delay100us();
+     }
      while(1)
      {
           if(X3==1)return;
@@ -195,83 +300,19 @@ void Tohome()
 void UART_Read(u8 port)
 {
      Delay100us();
-     // if(COM1.RX_TimeOut > 0)		//超时计数
-	// 	{
-	// 		if(--COM1.RX_TimeOut == 0)
-	// 		{
-	// 			if(COM1.RX_Cnt > 0)
-	// 			{
-	// 				for(i=0; i<COM1.RX_Cnt; i++)
-     //                     {
-     //                          UART_Handle(RX1_Buffer[i]);
-     //                     }
-	// 			}
-	// 			COM1.RX_Cnt = 0;
-	// 		}
-	// 	}
-	if(COM2.RX_TimeOut > 0)		//超时计数
-		{
-			if(--COM2.RX_TimeOut == 0)
-			{
-				if(COM2.RX_Cnt > 0)
-				{
-					for(i=0; i<COM2.RX_Cnt; i++)
-                         {
-                              UART_Handle(RX2_Buffer[i]);
-                         }
-				}
-				COM2.RX_Cnt = 0;
-			}
-		}
+
+     if (rptr != wptr)
+     {
+          UART_Handle(buffer[rptr++]);
+          rptr &= 0x0f;
+     }
 }
 
-
-
-void	UART_Init()
-{
-	COMx_InitDefine		COMx_InitStructure;					//结构定义
-	// COMx_InitStructure.UART_Mode      = UART_8bit_BRTx;		//模式,       UART_ShiftRight,UART_8bit_BRTx,UART_9bit,UART_9bit_BRTx
-	// COMx_InitStructure.UART_BRT_Use   = BRT_Timer1;			//使用波特率,   BRT_Timer1, BRT_Timer2 (注意: 串口2固定使用BRT_Timer2)
-	// COMx_InitStructure.UART_BaudRate  = 115200ul;			//波特率, 一般 110 ~ 115200
-	// COMx_InitStructure.UART_RxEnable  = ENABLE;				//接收允许,   ENABLE或DISABLE
-	// COMx_InitStructure.BaudRateDouble = DISABLE;			//波特率加倍, ENABLE或DISABLE
-	// COMx_InitStructure.UART_Interrupt = ENABLE;				//中断允许,   ENABLE或DISABLE
-	// COMx_InitStructure.UART_Polity    = PolityLow;			//中断优先级, PolityLow,PolityHigh
-	// COMx_InitStructure.UART_P_SW      = UART1_SW_P30_P31;	//切换端口,   UART1_SW_P30_P31,UART1_SW_P36_P37,UART1_SW_P16_P17(必须使用内部时钟)
-	// COMx_InitStructure.UART_RXD_TXD_Short = DISABLE;		//内部短路RXD与TXD, 做中继, ENABLE,DISABLE
-	// USART_Configuration(USART1, &COMx_InitStructure);		//初始化串口1 USART1,USART2
-
-	COMx_InitStructure.UART_Mode      = UART_8bit_BRTx;		//模式,       UART_ShiftRight,UART_8bit_BRTx,UART_9bit,UART_9bit_BRTx
-	COMx_InitStructure.UART_BaudRate  = 115200ul;			//波特率,     110 ~ 115200
-	COMx_InitStructure.UART_RxEnable  = ENABLE;				//接收允许,   ENABLE或DISABLE
-	COMx_InitStructure.UART_Interrupt = DISABLE;				//中断允许,   ENABLE或DISABLE
-	COMx_InitStructure.UART_Polity    = PolityLow;			//中断优先级, PolityLow,PolityHigh
-	COMx_InitStructure.UART_P_SW      = UART2_SW_P10_P11;	//切换端口,   UART2_SW_P10_P11,UART2_SW_P46_P47
-	USART_Configuration(USART2, &COMx_InitStructure);		//初始化串口2 USART1,USART2
-}
-
-// void Timer_Init(u16 time)
-// {
-// 	TIM_InitStructure.TIM_Mode      = TIM_16BitAutoReload;	//指定工作模式,   TIM_16BitAutoReload,TIM_16Bit,TIM_8BitAutoReload,TIM_16BitAutoReloadNoMask
-// 	TIM_InitStructure.TIM_Polity    = PolityLow;			//指定中断优先级, PolityHigh,PolityLow
-// 	TIM_InitStructure.TIM_Interrupt = ENABLE;				//中断是否允许,   ENABLE或DISABLE
-// 	TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_1T;			//指定时钟源,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_Ext
-// 	TIM_InitStructure.TIM_ClkOut    = ENABLE;				//是否输出高速脉冲, ENABLE或DISABLE
-// 	TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / 2*time);		//初值,
-// 	TIM_InitStructure.TIM_Run       = ENABLE;				//是否初始化后启动定时器, ENABLE或DISABLE
-// 	Timer_Inilize(Timer4,&TIM_InitStructure);				//初始化Timer0	  Timer0,Timer1,Timer2
-// }
 
 void Rom_Init()
 {
-     EEPROM_read_n(0x00,temp,2);
-     MotorHZ=temp[1];
-     MotorHZ<<8;
-     MotorHZ &= temp[0];
-     EEPROM_read_n(0x10,temp,2);
-     MotorCycle=temp[1];
-     MotorCycle<<8;
-     MotorCycle &= temp[0];
+     MotorCycle=IapRead(0x0000);
+     MotorHz=IapRead(0x0010);
 }
 
 
@@ -279,53 +320,52 @@ void UART_Handle(u8 dat)
 {
      switch (dat)
      {
-     case 'w':
-          Status.mode='w';
-          Status.flag=MODE;
+     case MB_CycleUp: 
+     {
+          MotorCycle=MotorCycle+1;
           break;
-     case 'r':
-          Status.mode='r';
-          Status.flag=MODE;
+     }
+     case MB_CycleDown:
+     {
+          MotorCycle=MotorCycle-1;
           break;
-     default:
-          switch (Status.flag)
-          {
-          case MODE:
-               Status.data_bits=dat;
-               Status.flag=BITS;
-               break;
-          case BITS:
-               Status.address=dat;
-               Status.flag=ADDRESS;
-               break;
-          case ADDRESS:
-               Status.address=dat;
-               Status.flag=ENDBITS;
-               break;
-          case ENDBITS:
-               if(dat!=ENDBIT)
-               {
-                    Status.datas[Status.data_now]=dat;
-                    Status.data_now++;
-                    break;
-               }
-               if(dat==ENDBIT)
-               {
-                    Status.flag=RESULT;
-                    if(Status.mode==READ)
-                    {
-                         EEPROM_read_n(Status.address,Status.datas,Status.data_bits);
-                    }
-                    if(Status.mode==WRITE)
-                    {
-                         EEPROM_write_n(Status.address,Status.datas,Status.data_bits);
-                    }
-                    break;
-               }
-          default:
-               break;
-          }
+     }
+     case MB_HzUp:
+     {
+          MotorHz=MotorHz+1;
           break;
+     }
+     case MB_HzDown:
+     {
+          MotorHz=MotorHz-1;
+          break;
+     }
+     case 'z':
+     {
+          MotorHz=160;
+          MotorCycle=2;
+          break;
+     }
+     case 'm':
+     {
+          IAP_CONTR |= 0x60;
+          return;
+     }
+     case 's':
+     {
+          databit=IapRead(0x0000);
+          Delay100us();
+          UartSend(databit);
+          delay_ms(100);
+          databit=IapRead(0x0010);
+          Delay100us();
+          UartSend(databit);
+          delay_ms(100);
+          UartSend(MotorHz);
+          delay_ms(100);
+          UartSend(MotorCycle);
+          return;
+     }
      }
 }
 
@@ -354,3 +394,45 @@ char Isbuttonon()
      if(cc==1&&ccc==1)return 1;
      return 0;
 }
+
+void ROM_Write()
+{
+     IapErase(0x0000);
+     Delay100us();
+     IapProgram(0x0000,MotorCycle);
+     Delay100us();
+     IapProgram(0x0010,MotorHz);
+}
+
+
+int main() 
+{
+     P2=0x00;
+     P0M1=0x00;
+     P0M0=0X00;
+     P2M0=0xff;
+     P2M1=0x00;
+     //delay_ms(5);
+     //UART_Init();
+     delay_ms(5);
+     UartInit();
+     EA=1;
+     ES=1;
+     Rom_Init();
+     delay_ms(1000);
+     Tohome();
+     while(1)
+     {
+          if(X2!=0)
+          {
+               if(X0==0&&X1==0)
+               {
+                    Run();
+               }
+          }
+          UART_Read(0);
+     }
+
+     return 0;
+}
+

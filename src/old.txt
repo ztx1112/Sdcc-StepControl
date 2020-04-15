@@ -1,0 +1,81 @@
+     if(Status.mode==0)
+     {
+          switch (dat)
+          {
+          case Button_begin:
+               Status.mode=BUTTON;
+               Status.datas[Status.data_bits]=dat;
+               Status.data_bits=1;
+               break;
+          case Number_begin:
+               Status.mode=NUMBER;
+               break;
+          default:
+               break;
+          }
+          return;
+     }
+     if(Status.mode==BUTTON)
+     {
+          if(dat==Button_code[Status.data_bits])
+          {
+               Status.datas[Status.data_bits]=dat;
+               Status.data_bits++;
+               return;
+          }
+          else
+          {
+               Status.data_now=atoi(&dat);
+               ButtonHandle(Status.data_now);
+               Status.mode=0;
+               Status.data_bits=0;
+               memset(Status.datas,0,64*sizeof(char));
+               return;
+          }
+     }
+     if(Status.mode==NUMBER)
+     {
+          if(dat!=Number_end)
+          {
+               Status.datas[Status.data_bits]=dat;
+               return;
+          }
+          else
+          {
+               memcpy(numbertemp,Status.datas,64);
+               Status.flage=NUMBER;
+               return;
+          }
+     }
+     if(dat==Endbit)CommandHandle();
+     if(dat!=Endbit)
+     {
+          Status.datas[Status.data_bits]=dat;
+          Status.data_bits++;
+          return;
+     }
+
+
+     typedef xdata struct
+{
+     u8 mode=0;     //模式
+     u8 data_bits=0;     //数据位数
+     u8 datas[64];   //数据缓存
+     u8 data_now;   //当前数据位数
+     u8 address;  //数据地址
+     u8 flag;     //标志
+}UART_Status;
+#define BUTTON 0xa0  //读取按钮
+#define NUMBER 0xa1  //读取数字
+#define PAGE 0xa2    //页面切换
+#define CONTROL 'c'  //控制模式
+
+char Button_begin="[";
+char Button_ctrl=":";
+char Button_end="]";
+char Button_code="[BN:  ";
+char Number_begin="{";
+char Number_end="}";
+char NumberBuffer[32];
+char Endbit=0x04;
+char CM_page[4]="PAGE";

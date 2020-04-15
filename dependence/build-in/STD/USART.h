@@ -13,7 +13,7 @@
 #define	USART2	2
 
 #define	UART_ShiftRight	0		//同步移位输出
-#define	UART_8bit_BRTx	(1<<6)	//8位数据,可变波特率
+#define	UART_8bit_BRTx	(1<<7)	//8位数据,可变波特率
 #define	UART_9bit		(2<<6)	//9位数据,固定波特率
 #define	UART_9bit_BRTx	(3<<6)	//9位数据,可变波特率
 

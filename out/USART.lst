@@ -1,14 +1,14 @@
-C51 COMPILER V9.55   USART                                                                 04/12/2020 17:13:52 PAGE 1   
+C51 COMPILER V9.55   USART                                                                 04/15/2020 11:38:24 PAGE 1   
 
 
 C51 COMPILER V9.55, COMPILATION OF MODULE USART
 OBJECT MODULE PLACED IN c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\USART.obj
 COMPILER INVOKED BY: c:\Keil_v5\C51\BIN\C51.exe c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\
-                    -STD\USART.C LARGE OMF2 ROM(LARGE) OPTIMIZE(8,SPEED) REGFILE(c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\main
-                    -.ORC) INCDIR(c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence;c:\Users\Administrator\Documents\Source\MCU\
-                    -bujin\.\dependence\build-in;c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD;c:\Keil_v5\C51\I
-                    -NC) PRINT(c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\USART.lst) TABS(2) OBJECT(c:\Users\Administrator\Docum
-                    -ents\Source\MCU\bujin\.\out\USART.obj)
+                    -STD\USART.C COMPACT OMF2 ROM(LARGE) OPTIMIZE(8,SPEED) REGFILE(c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\ma
+                    -in.ORC) INCDIR(c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence;c:\Users\Administrator\Documents\Source\MC
+                    -U\bujin\.\dependence\build-in;c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD;c:\Keil_v5\C51
+                    -\INC) PRINT(c:\Users\Administrator\Documents\Source\MCU\bujin\.\out\USART.lst) TABS(2) OBJECT(c:\Users\Administrator\Doc
+                    -uments\Source\MCU\bujin\.\out\USART.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   48   4              INTCLKO &= ~0x02; //�����ʱ��?
   49   4              TR1  = 1;
   50   4            }
-C51 COMPILER V9.55   USART                                                                 04/12/2020 17:13:52 PAGE 2   
+C51 COMPILER V9.55   USART                                                                 04/15/2020 11:38:24 PAGE 2   
 
   51   3            else if(COMx->UART_BRT_Use == BRT_Timer2)
   52   3            {
@@ -126,7 +126,7 @@ line level    source
  109   3            TH2 = (u8)(j>>8);
  110   3            TL2 = (u8)j;
  111   3            IE2  &= ~(1<<2);  //��ֹ�ж�
-C51 COMPILER V9.55   USART                                                                 04/12/2020 17:13:52 PAGE 3   
+C51 COMPILER V9.55   USART                                                                 04/15/2020 11:38:24 PAGE 3   
 
  112   3            AUXR |=  (1<<4);  //Timer run enable
  113   3          }
@@ -190,7 +190,7 @@ line level    source
  171          */
  172          
  173          
-C51 COMPILER V9.55   USART                                                                 04/12/2020 17:13:52 PAGE 4   
+C51 COMPILER V9.55   USART                                                                 04/15/2020 11:38:24 PAGE 4   
 
  174          /********************* UART1�жϺ���************************/
  175          void UART1_int (void) interrupt UART1_VECTOR
@@ -252,12 +252,12 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1273    ----
+   CODE SIZE        =   1206    ----
    CONSTANT SIZE    =   ----    ----
-C51 COMPILER V9.55   USART                                                                 04/12/2020 17:13:52 PAGE 5   
+C51 COMPILER V9.55   USART                                                                 04/15/2020 11:38:24 PAGE 5   
 
-   XDATA SIZE       =    526       9
-   PDATA SIZE       =   ----    ----
+   XDATA SIZE       =    512    ----
+   PDATA SIZE       =     14       9
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
