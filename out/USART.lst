@@ -1,4 +1,4 @@
-C51 COMPILER V9.55   USART                                                                 04/15/2020 11:38:24 PAGE 1   
+C51 COMPILER V9.55   USART                                                                 05/07/2020 22:02:00 PAGE 1   
 
 
 C51 COMPILER V9.55, COMPILATION OF MODULE USART
@@ -62,7 +62,7 @@ line level    source
   48   4              INTCLKO &= ~0x02; //�����ʱ��?
   49   4              TR1  = 1;
   50   4            }
-C51 COMPILER V9.55   USART                                                                 04/15/2020 11:38:24 PAGE 2   
+C51 COMPILER V9.55   USART                                                                 05/07/2020 22:02:00 PAGE 2   
 
   51   3            else if(COMx->UART_BRT_Use == BRT_Timer2)
   52   3            {
@@ -126,7 +126,7 @@ line level    source
  109   3            TH2 = (u8)(j>>8);
  110   3            TL2 = (u8)j;
  111   3            IE2  &= ~(1<<2);  //��ֹ�ж�
-C51 COMPILER V9.55   USART                                                                 04/15/2020 11:38:24 PAGE 3   
+C51 COMPILER V9.55   USART                                                                 05/07/2020 22:02:00 PAGE 3   
 
  112   3            AUXR |=  (1<<4);  //Timer run enable
  113   3          }
@@ -190,7 +190,7 @@ line level    source
  171          */
  172          
  173          
-C51 COMPILER V9.55   USART                                                                 04/15/2020 11:38:24 PAGE 4   
+C51 COMPILER V9.55   USART                                                                 05/07/2020 22:02:00 PAGE 4   
 
  174          /********************* UART1�жϺ���************************/
  175          void UART1_int (void) interrupt UART1_VECTOR
@@ -254,7 +254,7 @@ line level    source
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =   1206    ----
    CONSTANT SIZE    =   ----    ----
-C51 COMPILER V9.55   USART                                                                 04/15/2020 11:38:24 PAGE 5   
+C51 COMPILER V9.55   USART                                                                 05/07/2020 22:02:00 PAGE 5   
 
    XDATA SIZE       =    512    ----
    PDATA SIZE       =     14       9

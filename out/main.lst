@@ -1,4 +1,4 @@
-C51 COMPILER V9.55   MAIN                                                                  04/15/2020 11:38:24 PAGE 1   
+C51 COMPILER V9.55   MAIN                                                                  05/07/2020 22:02:00 PAGE 1   
 
 
 C51 COMPILER V9.55, COMPILATION OF MODULE MAIN
@@ -14,471 +14,136 @@ line level    source
 
    1          #include "C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\stc8.h"
    2          #include <C:\Keil_v5\C51\INC\intrins.h>
-   3          #include "C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\USART.h"
-   4          #include "C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\EEPROM.h"
-   5          #include <C:\Keil_v5\C51\INC\stdlib.h>
-   6          #include <C:\Keil_v5\C51\INC\string.h>
-   7          
-   8          
-   9          #define BRT             (65536 - MAIN_Fosc / 115200 / 4)
-  10          bit busy;
-  11          char wptr;
-  12          char rptr;
-  13          char buffer[16];
-  14          
-  15          unsigned char databit;
-  16          
-  17          void UartIsr() interrupt 4
-  18          {
-  19   1           if (TI)
-  20   1           {
-  21   2                TI = 0;
-  22   2                busy = 0;
-  23   2           }
-  24   1           if (RI)
-  25   1           {
-  26   2                RI = 0;
-  27   2                buffer[wptr++] = SBUF;
-  28   2                wptr &= 0x0f;
-  29   2           }
-  30   1      }
-  31          
-  32          void UartInit()
-  33          {
-  34   1           SCON = 0x50;
-  35   1           TMOD = 0x00;
-  36   1           TL1 = BRT;
-  37   1           TH1 = BRT >> 8;
-  38   1           TR1 = 1;
-  39   1           AUXR = 0x40;
-  40   1           wptr = 0x00;
-  41   1           rptr = 0x00;
-  42   1           busy = 0;
-  43   1      }
-  44          
-  45          void UartSend(char dat)
-  46          {
-  47   1           while (busy);
-  48   1           busy = 1;
-  49   1           SBUF = dat;
-  50   1      }
-C51 COMPILER V9.55   MAIN                                                                  04/15/2020 11:38:24 PAGE 2   
+   3          
+   4          
+   5          void Delay80ms()    //@24.000MHz
+   6          {
+   7   1        unsigned char i, j, k;
+   8   1      
+   9   1        _nop_();
+  10   1        _nop_();
+  11   1        i = 8;
+  12   1        j = 76;
+  13   1        k = 168;
+  14   1        do
+  15   1        {
+  16   2          do
+  17   2          {
+  18   3            while (--k);
+  19   3          } while (--j);
+  20   2        } while (--i);
+  21   1      }
+  22          void Delay10ms()    //@24.000MHz
+  23          {
+  24   1        unsigned char i, j, k;
+  25   1      
+  26   1        _nop_();
+  27   1        _nop_();
+  28   1        i = 1;
+  29   1        j = 234;
+  30   1        k = 113;
+  31   1        do
+  32   1        {
+  33   2          do
+  34   2          {
+  35   3            while (--k);
+  36   3          } while (--j);
+  37   2        } while (--i);
+  38   1      }
+  39          
+  40          
+  41          
+  42          sbit Y0=P2^5;
+  43          sbit Y1=P2^4;
+  44          sbit Y2=P2^3;
+  45          sbit Y3=P2^2;
+  46          sbit Y4=P4^2;
+  47          sbit Y5=P2^0;
+  48          
+  49          sbit X0=P1^2;
+  50          sbit X1=P1^3;
+C51 COMPILER V9.55   MAIN                                                                  05/07/2020 22:02:00 PAGE 2   
 
-  51          
-  52          void UartSendStr(char *p)
-  53          {
-  54   1           while (*p)
-  55   1           {
-  56   2                UartSend(*p++);
-  57   2           }
-  58   1      }
+  51          sbit X2=P1^4;
+  52          sbit X3=P4^4;
+  53          sbit X4=P1^5;
+  54          sbit X5=P1^6;
+  55          sbit X6=P1^7;
+  56          sbit X7=P3^2;
+  57          sbit X8=P3^3;
+  58          sbit X9=P3^4;
   59          
-  60          #define WT_30M          0x80
-  61          #define WT_24M          0x81
-  62          #define WT_20M          0x82
-  63          #define WT_12M          0x83
-  64          #define WT_6M           0x84
-  65          #define WT_3M           0x85
-  66          #define WT_2M           0x86
-  67          #define WT_1M           0x87
-  68          
-  69          void IapIdle()
-  70          {
-  71   1           IAP_CONTR = 0;                              //锟截憋拷IAP锟斤拷锟斤拷
-  72   1           IAP_CMD = 0;                                //锟斤拷锟斤拷锟斤拷锟侥达拷锟斤拷
-  73   1           IAP_TRIG = 0;                               //锟斤拷锟斤拷锟斤拷锟斤拷拇锟斤拷锟�
-  74   1           IAP_ADDRH = 0x80;                           //锟斤拷锟斤拷址锟斤拷锟矫碉拷锟斤拷IAP�
-             -��斤拷锟斤拷
-  75   1           IAP_ADDRL = 0;
-  76   1      }
-  77          
-  78          char IapRead(int addr)
-  79          {
-  80   1           IAP_CONTR = WT_24M;                         //使锟斤拷IAP
-  81   1           IAP_CMD = 1;                                //锟斤拷锟斤拷IAP锟斤拷锟斤拷锟斤拷
-  82   1           IAP_ADDRL = addr;                           //锟斤拷锟斤拷IAP锟酵碉拷址
-  83   1           IAP_ADDRH = addr >> 8;                      //锟斤拷锟斤拷IAP锟竭碉拷址
-  84   1           IAP_TRIG = 0x5a;                            //写锟斤拷锟斤拷锟斤拷锟斤拷(0x5a)
-  85   1           IAP_TRIG = 0xa5;                            //写锟斤拷锟斤拷锟斤拷锟斤拷(0xa5)
-  86   1           _nop_();
-  87   1           databit = IAP_DATA;                             //锟斤拷IAP锟斤拷锟斤拷
-  88   1           IapIdle();                                  //锟截憋拷IAP锟斤拷锟斤拷
-  89   1      
-  90   1           return databit;
-  91   1      }
-  92          
-  93          void IapProgram(int addr, unsigned char dat)
-  94          {
-  95   1           IAP_CONTR = WT_24M;                         //使锟斤拷IAP
-  96   1           IAP_CMD = 2;                                //锟斤拷锟斤拷IAP写锟斤拷锟斤拷
-  97   1           IAP_ADDRL = addr;                           //锟斤拷锟斤拷IAP锟酵碉拷址
-  98   1           IAP_ADDRH = addr >> 8;                      //锟斤拷锟斤拷IAP锟竭碉拷址
-  99   1           IAP_DATA = dat;                             //写IAP锟斤拷锟斤拷
- 100   1           IAP_TRIG = 0x5a;                            //写锟斤拷锟斤拷锟斤拷锟斤拷(0x5a)
- 101   1           IAP_TRIG = 0xa5;                            //写锟斤拷锟斤拷锟斤拷锟斤拷(0xa5)
- 102   1           _nop_();
- 103   1           IapIdle();                                  //锟截憋拷IAP锟斤拷锟斤拷
- 104   1      }
- 105          
- 106          void IapErase(int addr)
- 107          {
- 108   1           IAP_CONTR = WT_24M;                         //使锟斤拷IAP
- 109   1           IAP_CMD = 3;                                //锟斤拷锟斤拷IAP锟斤拷锟斤拷锟斤拷锟斤�
-             -��
- 110   1           IAP_ADDRL = addr;                           //锟斤拷锟斤拷IAP锟酵碉拷址
-C51 COMPILER V9.55   MAIN                                                                  04/15/2020 11:38:24 PAGE 3   
+  60          int Run()
+  61          {
+  62   1           Y0=1;
+  63   1           while (1)
+  64   1           {
+  65   2                if(X1==0)
+  66   2                {
+  67   3                     Delay80ms();
+  68   3                     Y1=1;
+  69   3                     while (1)
+  70   3                     {
+  71   4                          if(X2==0)
+  72   4                          {
+  73   5                               Delay10ms();
+  74   5                               Y2=1;
+  75   5                               while (1)
+  76   5                               {
+  77   6                                    if(X4==0)
+  78   6                                    {
+  79   7                                         Delay80ms();
+  80   7                                         Y2=0;
+  81   7                                         Y1=0;
+  82   7                                         Y0=0;
+  83   7                                         return;
+  84   7                                    }
+  85   6                               }
+  86   5                               
+  87   5                          }
+  88   4                     }
+  89   3                     
+  90   3                }
+  91   2           }
+  92   1           
+  93   1      }
+  94          
+  95          int main() 
+  96          {
+  97   1           P0=0Xff;
+  98   1           P2=0x00;
+  99   1           P0M1=0x00;
+ 100   1           P0M0=0X00;
+ 101   1           P2M0=0xff;
+ 102   1           P2M1=0x00;
+ 103   1           Delay80ms();
+ 104   1           while(1)
+ 105   1           {
+ 106   2                if(X2!=0&&X1!=0)
+ 107   2                {
+ 108   3                     if(X6==0)
+ 109   3                     {
+ 110   4                          Run();
+ 111   4                     }
+ 112   3                }
+C51 COMPILER V9.55   MAIN                                                                  05/07/2020 22:02:00 PAGE 3   
 
- 111   1           IAP_ADDRH = addr >> 8;                      //锟斤拷锟斤拷IAP锟竭碉拷址
- 112   1           IAP_TRIG = 0x5a;                            //写锟斤拷锟斤拷锟斤拷锟斤拷(0x5a)
- 113   1           IAP_TRIG = 0xa5;                            //写锟斤拷锟斤拷锟斤拷锟斤拷(0xa5)
- 114   1           _nop_();                                    //
- 115   1           IapIdle();                                  //锟截憋拷IAP锟斤拷锟斤拷
- 116   1      }
- 117          
- 118          
- 119          
- 120          
- 121          sbit Y0=P2^5;
- 122          sbit Y1=P2^4;
- 123          sbit Y2=P2^3;
- 124          sbit Y3=P2^2;
- 125          sbit Y4=P4^2;
- 126          sbit Y5=P2^0;
- 127          
- 128          sbit X0=P1^2;
- 129          sbit X1=P1^3;
- 130          sbit X2=P1^4;
- 131          sbit X3=P4^4;
- 132          sbit X4=P1^5;
- 133          sbit X5=P1^6;
- 134          sbit X6=P1^7;
- 135          sbit X7=P3^2;
- 136          sbit X8=P3^3;
- 137          sbit X9=P3^4;
- 138          
- 139          
- 140          sbit PUL=P0^6;
- 141          sbit DIR=P0^4;
- 142          
- 143          #define MB_CycleUp '3'
- 144          #define MB_CycleDown '4'
- 145          #define MB_HzDown '7'
- 146          #define MB_HzUp '6'
- 147          
- 148          // char Button_00[]={'[','B','N',':','0',']'};
- 149          // char Button_01[]="[BN:1]";
- 150          // char Button_02[]="[BN:2]";
- 151          // char Button_03[]="[BN:3]";
- 152          // char Button_04[]={'[','B','N',':','4',']'};
- 153          // char Button_05[]="[BN:5]";
- 154          // char Button_06[]="[BN:6]";
- 155          // char Button_07[]="[BN:7]";
- 156          // char Button_08[]="[BN:8]";
- 157          // char Button_09[]="[BN:9]";
- 158          // char Button_12[]="[BN:12]";
- 159          // char Button_13[]="[BN:13]";
- 160          
- 161          // char Page_00[]={'P','A','G','E','0','0'};
- 162          // char Page_01[]={'P','A','G','E','0','1'};
- 163          // char Page_02[]={'P','A','G','E','0','2'};
- 164          // char Page_10[]="PAGE10";
- 165          
- 166          // char Button_begin='[';
- 167          // char Button_end=']';
- 168          // char Number_begin='{';
- 169          // char Number_end='}';
- 170          
- 171          
- 172          void Runmotor(unsigned int);
-C51 COMPILER V9.55   MAIN                                                                  04/15/2020 11:38:24 PAGE 4   
-
- 173          void Tohome();
- 174          void Run();
- 175          void  UART_Init();
- 176          void UART_Read(u8);
- 177          void UART_Handle(u8);
- 178          //void Timer_Init(u16);
- 179          void Rom_Init();
- 180          void ROM_Write();
- 181          char Isbuttonon();
- 182          void ButtonHandle(u8);
- 183          void CommandHandle();
- 184          
- 185          //TIM_InitTypeDef xdata TIM_InitStructure;          //结构定义
- 186          unsigned char MotorHz;   //马达运行频率 addres=0x0000
- 187          unsigned char MotorCycle;     //马达运行圈数 addres=0x0000
- 188          
- 189          unsigned int i,ii;
- 190          
- 191          u8 Button1;
- 192          u8 Button2;
- 193          
- 194          u8 flag;
- 195          
- 196          void  delay_ms(unsigned int ms)
- 197          {
- 198   1           unsigned int i;
- 199   1         do{
- 200   2              i = 24000000L / 13000;
- 201   2            while(--i)  ;   //14T per loop
- 202   2           }while(--ms);
- 203   1      }
- 204          
- 205          void Delay100us()   //@24.000MHz
- 206          {
- 207   1        unsigned char i, j;
- 208   1        i = 4;
- 209   1        j = 27;
- 210   1        do
- 211   1        {
- 212   2          while (--j);
- 213   2        } while (--i);
- 214   1      }
- 215          void Delay1us()   //@24.000MHz
- 216          {
- 217   1        unsigned char i;
- 218   1      
- 219   1        i = 6;
- 220   1        while (--i);
- 221   1      }
- 222          
- 223          
- 224          void Run()
- 225          {
- 226   1           Y0=1;
- 227   1           while(1)
- 228   1           {
- 229   2                if(X2==0)
- 230   2                {
- 231   3                     delay_ms(10);
- 232   3                     Runmotor(MotorCycle*400);
- 233   3                     Y0=0;
- 234   3                     Tohome();
-C51 COMPILER V9.55   MAIN                                                                  04/15/2020 11:38:24 PAGE 5   
-
- 235   3                     while (1)
- 236   3                     {
- 237   4                          if(X3!=0&&X2!=0)break;
- 238   4                     }
- 239   3                     Delay100us();
- 240   3                     ROM_Write();
- 241   3                     return;
- 242   3                }
- 243   2           }
- 244   1      }
- 245          
- 246          
- 247          void Runmotor(u16 num)
- 248          {
- 249   1           i=0;
- 250   1           ii=0;
- 251   1           while(1)
- 252   1           {
- 253   2                if(i>num)break;
- 254   2                PUL=0;
- 255   2                for(ii=0;ii<MotorHz;ii++)
- 256   2                {
- 257   3                     Delay1us();
- 258   3                }
- 259   2                PUL=1;
- 260   2                for(ii=0;ii<MotorHz;ii++)
- 261   2                {
- 262   3                     Delay1us();
- 263   3                }
- 264   2                i=i+1;
- 265   2           }
- 266   1      }
- 267          
- 268          void Tohome()
- 269          {
- 270   1           i=0;
- 271   1           for(i=0;i<100;i++)
- 272   1           {
- 273   2                PUL=0;
- 274   2                Delay100us();
- 275   2                Delay100us();
- 276   2                Delay100us();
- 277   2                PUL=1;
- 278   2                Delay100us();
- 279   2                Delay100us();
- 280   2                Delay100us();
- 281   2           }
- 282   1           while(1)
- 283   1           {
- 284   2                if(X3==1)return;
- 285   2                PUL=0;
- 286   2                Delay100us();
- 287   2                Delay100us();
- 288   2                Delay100us();
- 289   2                Delay100us();
- 290   2                Delay100us();
- 291   2                PUL=1;
- 292   2                Delay100us();
- 293   2                Delay100us();
- 294   2                Delay100us();
- 295   2                Delay100us();
- 296   2                Delay100us();
-C51 COMPILER V9.55   MAIN                                                                  04/15/2020 11:38:24 PAGE 6   
-
- 297   2           }
- 298   1      }
- 299          
- 300          void UART_Read(u8 port)
- 301          {
- 302   1           Delay100us();
- 303   1      
- 304   1           if (rptr != wptr)
- 305   1           {
- 306   2                UART_Handle(buffer[rptr++]);
- 307   2                rptr &= 0x0f;
- 308   2           }
- 309   1      }
-*** WARNING C280 IN LINE 300 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\src\main.c: 'port': unreferenced loc
-             -al variable
- 310          
- 311          
- 312          void Rom_Init()
- 313          {
- 314   1           MotorCycle=IapRead(0x0000);
- 315   1           MotorHz=IapRead(0x0010);
- 316   1      }
- 317          
- 318          
- 319          void UART_Handle(u8 dat)
- 320          {
- 321   1           switch (dat)
- 322   1           {
- 323   2           case MB_CycleUp: 
- 324   2           {
- 325   3                MotorCycle=MotorCycle+1;
- 326   3                break;
- 327   3           }
- 328   2           case MB_CycleDown:
- 329   2           {
- 330   3                MotorCycle=MotorCycle-1;
- 331   3                break;
- 332   3           }
- 333   2           case MB_HzUp:
- 334   2           {
- 335   3                MotorHz=MotorHz+1;
- 336   3                break;
- 337   3           }
- 338   2           case MB_HzDown:
- 339   2           {
- 340   3                MotorHz=MotorHz-1;
- 341   3                break;
- 342   3           }
- 343   2           case 'z':
- 344   2           {
- 345   3                MotorHz=160;
- 346   3                MotorCycle=2;
- 347   3                break;
- 348   3           }
- 349   2           case 'm':
- 350   2           {
- 351   3                IAP_CONTR |= 0x60;
- 352   3                return;
- 353   3           }
- 354   2           case 's':
- 355   2           {
- 356   3                databit=IapRead(0x0000);
-C51 COMPILER V9.55   MAIN                                                                  04/15/2020 11:38:24 PAGE 7   
-
- 357   3                Delay100us();
- 358   3                UartSend(databit);
- 359   3                delay_ms(100);
- 360   3                databit=IapRead(0x0010);
- 361   3                Delay100us();
- 362   3                UartSend(databit);
- 363   3                delay_ms(100);
- 364   3                UartSend(MotorHz);
- 365   3                delay_ms(100);
- 366   3                UartSend(MotorCycle);
- 367   3                return;
- 368   3           }
- 369   2           }
- 370   1      }
- 371          
- 372          char Isbuttonon()
- 373          {
- 374   1           char cc,ccc;
- 375   1           Button1=X0;
- 376   1           Button2=X1;
- 377   1           if(X0==0)
- 378   1           {
- 379   2                Delay100us();
- 380   2                if(Button1!=X0)
- 381   2                     cc=1;
- 382   2                else
- 383   2                     cc=0;
- 384   2           }
- 385   1           if(X1==0)
- 386   1           {
- 387   2                Delay100us();
- 388   2                if(Button2!=X1)
- 389   2                     ccc=1;
- 390   2                else
- 391   2                     ccc=0;
- 392   2                
- 393   2           }
- 394   1           if(cc==1&&ccc==1)return 1;
- 395   1           return 0;
- 396   1      }
- 397          
- 398          void ROM_Write()
- 399          {
- 400   1           IapErase(0x0000);
- 401   1           Delay100us();
- 402   1           IapProgram(0x0000,MotorCycle);
- 403   1           Delay100us();
- 404   1           IapProgram(0x0010,MotorHz);
- 405   1      }
- 406          
- 407          
- 408          int main() 
- 409          {
- 410   1           P2=0x00;
- 411   1           P0M1=0x00;
- 412   1           P0M0=0X00;
- 413   1           P2M0=0xff;
- 414   1           P2M1=0x00;
- 415   1           //delay_ms(5);
- 416   1           //UART_Init();
- 417   1           delay_ms(5);
- 418   1           UartInit();
-C51 COMPILER V9.55   MAIN                                                                  04/15/2020 11:38:24 PAGE 8   
-
- 419   1           EA=1;
- 420   1           ES=1;
- 421   1           Rom_Init();
- 422   1           delay_ms(1000);
- 423   1           Tohome();
- 424   1           while(1)
- 425   1           {
- 426   2                if(X2!=0)
- 427   2                {
- 428   3                     if(X0==0&&X1==0)
- 429   3                     {
- 430   4                          Run();
- 431   4                     }
- 432   3                }
- 433   2                UART_Read(0);
- 434   2           }
- 435   1      
- 436   1           return 0;
- 437   1      }
- 438          
-*** WARNING C294 IN LINE 436 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\src\main.c: unreachable code
+ 113   2           }
+ 114   1           return 0;
+ 115   1      }
+ 116          
+*** WARNING C290 IN LINE 93 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\src\main.c: missing return value
+*** WARNING C294 IN LINE 114 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\src\main.c: unreachable code
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    828    ----
+   CODE SIZE        =     93    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
-   PDATA SIZE       =     28       4
+   PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
-   BIT SIZE         =      1    ----
+   BIT SIZE         =   ----    ----
    EDATA SIZE       =   ----    ----
    HDATA SIZE       =   ----    ----
    XDATA CONST SIZE =   ----    ----
