@@ -1,13 +1,23 @@
 #ifndef __STC8_H_
 #define __STC8_H_
 
-#include "C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\config.h"
+#include "C:\Users\Administrator\Documents\Source\MCU\bujin\src\config.h"
 /////////////////////////////////////////////////
 
 //包含本头文件后,不用另外再包含"REG51.H"
 typedef 	unsigned char	u8;
 typedef 	unsigned int	u16;
 typedef 	unsigned long	u32;
+
+char busy;
+char uart1readflage;
+char uart2readflage;
+char uart3readflage;
+char uart4readflage;
+char uart1buffer;
+char uart2buffer;
+char uart3buffer;
+char uart4buffer;
 
 #define		ENABLE		1
 #define		DISABLE		0

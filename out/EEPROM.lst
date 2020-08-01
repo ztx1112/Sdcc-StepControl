@@ -1,4 +1,4 @@
-C51 COMPILER V9.55   EEPROM                                                                04/15/2020 11:38:24 PAGE 1   
+C51 COMPILER V9.55   EEPROM                                                                05/14/2020 20:00:14 PAGE 1   
 
 
 C51 COMPILER V9.55, COMPILATION OF MODULE EEPROM
@@ -16,7 +16,15 @@ line level    source
    2          //  本程序是STC系列的内置EEPROM读写程序。
    3          
    4          #include "C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\config.h"
+*** WARNING C318 IN LINE 18 OF C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\config.h: can't
+             - open file 'stc8.h'
    5          #include "C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\eeprom.h"
+*** ERROR C141 IN LINE 31 OF C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\eeprom.h: syntax 
+             -error near 'EE_address', expected ')'
+*** ERROR C141 IN LINE 32 OF C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\eeprom.h: syntax 
+             -error near 'EE_address', expected ')'
+*** ERROR C141 IN LINE 33 OF C:\Users\Administrator\Documents\Source\MCU\bujin\dependence\build-in\STD\eeprom.h: syntax 
+             -error near 'EE_address', expected ')'
    6          #include <C:\Keil_v5\C51\INC\intrins.h>
    7          
    8          
@@ -30,10 +38,20 @@ line level    source
   16          void  DisableEEPROM(void)
   17          {
   18   1        ISP_CONTR = 0;      //禁止ISP/IAP操作
+*** ERROR C202 IN LINE 18 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -CONTR': undefined identifier
   19   1        ISP_CMD   = 0;      //去除ISP/IAP命令
+*** ERROR C202 IN LINE 19 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -CMD': undefined identifier
   20   1        ISP_TRIG  = 0;      //防止ISP/IAP命令误触发
+*** ERROR C202 IN LINE 20 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -TRIG': undefined identifier
   21   1        ISP_ADDRH = 0xff;   //清0地址高字节
+*** ERROR C202 IN LINE 21 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -ADDRH': undefined identifier
   22   1        ISP_ADDRL = 0xff;   //清0地址低字节，指向非EEPROM区，防止误操作
+*** ERROR C202 IN LINE 22 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -ADDRL': undefined identifier
   23   1      }
   24          
   25          //========================================================================
@@ -44,30 +62,56 @@ line level    source
   30          //       number:      读出的字节长度.
   31          // 返回: non.
   32          // 版本: V1.0, 2012-10-22
+C51 COMPILER V9.55   EEPROM                                                                05/14/2020 20:00:14 PAGE 2   
+
   33          //========================================================================
   34          
   35          void EEPROM_read_n(u16 EE_address,u8 *DataAddress,u16 number)
+*** ERROR C141 IN LINE 35 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: synta
+             -x error near 'EE_address', expected ')'
   36          {
   37   1        EA = 0;   //禁止中断
+*** ERROR C202 IN LINE 37 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'EA':
+             - undefined identifier
   38   1        ISP_CONTR = (IAPEN + ISP_WAIT_FREQUENCY); //设置等待时间，允许ISP/IAP操作，送一次就够
+*** ERROR C202 IN LINE 38 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -CONTR': undefined identifier
   39   1        ISP_CMD = 1;                  //送字节读命令，命令不需改变时，不需重新送命令
+*** ERROR C202 IN LINE 39 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -CMD': undefined identifier
   40   1        do
   41   1        {
   42   2          ISP_ADDRH = EE_address / 256;   //送地址高字节（地址需要改变时才需重新送地址）
+*** ERROR C202 IN LINE 42 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -ADDRH': undefined identifier
   43   2          ISP_ADDRL = EE_address % 256;   //送地址低字节
+*** ERROR C202 IN LINE 43 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -ADDRL': undefined identifier
   44   2          ISP_TRIG = 0x5A;          //先送5AH，再送A5H到ISP/IAP触发寄存器，每次都需要如此
+*** ERROR C202 IN LINE 44 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -TRIG': undefined identifier
   45   2          ISP_TRIG = 0xA5;          //送完A5H后，ISP/IAP命令立即被触发启动
+*** ERROR C202 IN LINE 45 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -TRIG': undefined identifier
   46   2                            //CPU等待IAP完成后，才会继续执行程序。
   47   2          _nop_();
   48   2          *DataAddress = ISP_DATA;      //读出的数据送往
+*** ERROR C202 IN LINE 48 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'Data
+             -Address': undefined identifier
   49   2          EE_address++;
+*** ERROR C202 IN LINE 49 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'EE_a
+             -ddress': undefined identifier
   50   2          DataAddress++;
-C51 COMPILER V9.55   EEPROM                                                                04/15/2020 11:38:24 PAGE 2   
-
+*** ERROR C202 IN LINE 50 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'Data
+             -Address': undefined identifier
   51   2        }while(--number);
+*** ERROR C202 IN LINE 51 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'numb
+             -er': undefined identifier
   52   1      
   53   1        DisableEEPROM();
   54   1        EA = 1;   //重新允许中断
+*** ERROR C202 IN LINE 54 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'EA':
+             - undefined identifier
   55   1      }
   56          
   57          
@@ -80,20 +124,40 @@ line level    source
   64          // 版本: V1.0, 2013-5-10
   65          //========================================================================
   66          void EEPROM_SectorErase(u16 EE_address)
+*** ERROR C141 IN LINE 66 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: synta
+             -x error near 'EE_address', expected ')'
+C51 COMPILER V9.55   EEPROM                                                                05/14/2020 20:00:14 PAGE 3   
+
   67          {
   68   1        EA = 0;   //禁止中断
+*** ERROR C202 IN LINE 68 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'EA':
+             - undefined identifier
   69   1                            //只有扇区擦除，没有字节擦除，512字节/扇区。
   70   1                            //扇区中任意一个字节地址都是扇区地址。
   71   1        ISP_ADDRH = EE_address / 256;     //送扇区地址高字节（地址需要改变时才需重新送地址�
              -�
+*** ERROR C202 IN LINE 71 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -ADDRH': undefined identifier
   72   1        ISP_ADDRL = EE_address % 256;     //送扇区地址低字节
+*** ERROR C202 IN LINE 72 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -ADDRL': undefined identifier
   73   1        ISP_CONTR = (IAPEN + ISP_WAIT_FREQUENCY); //设置等待时间，允许ISP/IAP操作，送一次就够
+*** ERROR C202 IN LINE 73 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -CONTR': undefined identifier
   74   1        ISP_CMD = 3;              //送扇区擦除命令，命令不需改变时，不需重新送命令
+*** ERROR C202 IN LINE 74 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -CMD': undefined identifier
   75   1        ISP_TRIG = 0x5A;
+*** ERROR C202 IN LINE 75 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -TRIG': undefined identifier
   76   1        ISP_TRIG = 0xA5;
+*** ERROR C202 IN LINE 76 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -TRIG': undefined identifier
   77   1        _nop_();
   78   1        DisableEEPROM();
   79   1        EA = 1;   //重新允许中断
+*** ERROR C202 IN LINE 79 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'EA':
+             - undefined identifier
   80   1      }
   81          
   82          //========================================================================
@@ -106,44 +170,54 @@ line level    source
   89          // 版本: V1.0, 2012-10-22
   90          //========================================================================
   91          void EEPROM_write_n(u16 EE_address,u8 *DataAddress,u16 number)
+*** ERROR C141 IN LINE 91 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: synta
+             -x error near 'EE_address', expected ')'
   92          {
   93   1        EA = 0;   //禁止中断
+*** ERROR C202 IN LINE 93 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'EA':
+             - undefined identifier
   94   1      
   95   1        ISP_CONTR = (IAPEN + ISP_WAIT_FREQUENCY); //设置等待时间，允许ISP/IAP操作，送一次就够
+*** ERROR C202 IN LINE 95 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -CONTR': undefined identifier
   96   1        ISP_CMD = 2;              //送字节写命令，命令不需改变时，不需重新送命令
+*** ERROR C202 IN LINE 96 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -CMD': undefined identifier
   97   1        do
   98   1        {
   99   2          ISP_ADDRH = EE_address / 256;   //送地址高字节（地址需要改变时才需重新送地址）
+*** ERROR C202 IN LINE 99 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP_
+             -ADDRH': undefined identifier
  100   2          ISP_ADDRL = EE_address % 256;   //送地址低字节
+*** ERROR C202 IN LINE 100 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP
+C51 COMPILER V9.55   EEPROM                                                                05/14/2020 20:00:14 PAGE 4   
+
+             -_ADDRL': undefined identifier
  101   2          ISP_DATA  = *DataAddress;     //送数据到ISP_DATA，只有数据改变时才需重新送
+*** ERROR C202 IN LINE 101 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP
+             -_DATA': undefined identifier
  102   2          ISP_TRIG = 0x5A;
+*** ERROR C202 IN LINE 102 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP
+             -_TRIG': undefined identifier
  103   2          ISP_TRIG = 0xA5;
+*** ERROR C202 IN LINE 103 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'ISP
+             -_TRIG': undefined identifier
  104   2          _nop_();
  105   2          EE_address++;
+*** ERROR C202 IN LINE 105 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'EE_
+             -address': undefined identifier
  106   2          DataAddress++;
+*** ERROR C202 IN LINE 106 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'Dat
+             -aAddress': undefined identifier
  107   2        }while(--number);
+*** ERROR C202 IN LINE 107 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'num
+             -ber': undefined identifier
  108   1      
  109   1        DisableEEPROM();
  110   1        EA = 1;   //重新允许中断
+*** ERROR C202 IN LINE 110 OF c:\Users\Administrator\Documents\Source\MCU\bujin\.\dependence\build-in\STD\EEPROM.c: 'EA'
+             -: undefined identifier
  111   1      }
-C51 COMPILER V9.55   EEPROM                                                                04/15/2020 11:38:24 PAGE 3   
-
  112          
 
-
-MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    176    ----
-   CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----    ----
-   PDATA SIZE       =   ----      14
-   DATA SIZE        =   ----    ----
-   IDATA SIZE       =   ----    ----
-   BIT SIZE         =   ----    ----
-   EDATA SIZE       =   ----    ----
-   HDATA SIZE       =   ----    ----
-   XDATA CONST SIZE =   ----    ----
-   FAR CONST SIZE   =   ----    ----
-END OF MODULE INFORMATION.
-
-
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  1 WARNING(S),  43 ERROR(S)

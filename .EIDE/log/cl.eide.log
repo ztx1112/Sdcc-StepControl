@@ -116,3 +116,120 @@
 
 
 
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/5/14|16:00:37|GMT+0800
+
+
+
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/5/14|16:58:11|GMT+0800
+
+
+
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/5/15|20:34:32|GMT+0800
+
+
+
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/5/16|09:10:11|GMT+0800
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/5/16|12:30:31|GMT+0800
+
+
+
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/5/16|16:32:13|GMT+0800
+
+
+
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/5/17|13:34:33|GMT+0800
+
+
+
+[Error] : Error: write EPIPE
+	at afterWriteDispatched (internal/stream_base_commons.js:146:25)
+	at writeGeneric (internal/stream_base_commons.js:137:3)
+	at Socket._writeGeneric (net.js:698:11)
+	at Socket._write (net.js:710:8)
+	at doWrite (_stream_writable.js:418:12)
+	at writeOrBuffer (_stream_writable.js:402:5)
+	at Socket.Writable.write (_stream_writable.js:302:11)
+	at d.write (c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\services\extensions\node\extensionHostProcess.js:238:867)
+	at f._writeNow (c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\services\extensions\node\extensionHostProcess.js:231:110)
+	at Immediate.<anonymous> (c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\services\extensions\node\extensionHostProcess.js:231:48)
+	at processImmediate (internal/timers.js:439:21)
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/5/23|18:08:27|GMT+0800
+
+
+
+[Error] : Error: write EPIPE
+	at afterWriteDispatched (internal/stream_base_commons.js:146:25)
+	at writeGeneric (internal/stream_base_commons.js:137:3)
+	at Socket._writeGeneric (net.js:698:11)
+	at Socket._write (net.js:710:8)
+	at doWrite (_stream_writable.js:418:12)
+	at writeOrBuffer (_stream_writable.js:402:5)
+	at Socket.Writable.write (_stream_writable.js:302:11)
+	at d.write (c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\services\extensions\node\extensionHostProcess.js:238:867)
+	at f._writeNow (c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\services\extensions\node\extensionHostProcess.js:231:110)
+	at Immediate.<anonymous> (c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\services\extensions\node\extensionHostProcess.js:231:48)
+	at processImmediate (internal/timers.js:439:21)
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/5/23|18:09:34|GMT+0800
+
+
+
+[Error] : Error: write EPIPE
+	at afterWriteDispatched (internal/stream_base_commons.js:146:25)
+	at writeGeneric (internal/stream_base_commons.js:137:3)
+	at Socket._writeGeneric (net.js:698:11)
+	at Socket._write (net.js:710:8)
+	at doWrite (_stream_writable.js:418:12)
+	at writeOrBuffer (_stream_writable.js:402:5)
+	at Socket.Writable.write (_stream_writable.js:302:11)
+	at d.write (c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\services\extensions\node\extensionHostProcess.js:238:867)
+	at f._writeNow (c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\services\extensions\node\extensionHostProcess.js:231:110)
+	at Immediate.<anonymous> (c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\services\extensions\node\extensionHostProcess.js:231:48)
+	at processImmediate (internal/timers.js:439:21)
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/6/1|14:17:20|GMT+0800
+
+
+
+[Error] : Error: write EPIPE
+	at afterWriteDispatched (internal/stream_base_commons.js:146:25)
+	at writeGeneric (internal/stream_base_commons.js:137:3)
+	at Socket._writeGeneric (net.js:698:11)
+	at Socket._write (net.js:710:8)
+	at doWrite (_stream_writable.js:418:12)
+	at writeOrBuffer (_stream_writable.js:402:5)
+	at Socket.Writable.write (_stream_writable.js:302:11)
+	at d.write (c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\services\extensions\node\extensionHostProcess.js:238:867)
+	at f._writeNow (c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\services\extensions\node\extensionHostProcess.js:231:110)
+	at Immediate.<anonymous> (c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\services\extensions\node\extensionHostProcess.js:231:48)
+	at processImmediate (internal/timers.js:439:21)
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/6/1|18:07:40|GMT+0800
+
+
+
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/6/10|19:03:09|GMT+0800
+
+
+
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/6/17|13:47:22|GMT+0800
+
+
+
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/6/17|14:06:35|GMT+0800
+
+
+
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/6/23|19:14:08|GMT+0800
+
+
+
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/7/11|13:50:23|GMT+0800
+
+
+
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/8/1|15:37:43|GMT+0800
+
+
+
+[cl.eide] : [F7730281-5469-11CB-87F8-F9FCBC3479FE] : log at : 2020/8/1|15:43:52|GMT+0800
+
+
+
