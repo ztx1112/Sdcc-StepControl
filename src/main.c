@@ -318,7 +318,7 @@ void UART_Handle(char *dat)
                {
                     case 1:
                     {
-                         MotorHz+=1;
+                         MotorHz+=5;
                          UartSend(MotorHz);
                          break;
                     }
@@ -338,7 +338,7 @@ void UART_Handle(char *dat)
                {
                     case 1:
                     {
-                         MotorHz-=1;
+                         MotorHz-=5;
                          UartSend(MotorHz);
                          break;
                     }

@@ -1,5 +1,5 @@
 {
-    "name": "bujin",
+    "name": "Sdcc-StepControl",
     "type": "C51",
     "dependenceList": [
         {
@@ -7,11 +7,7 @@
             "depList": [
                 {
                     "name": "default",
-                    "incList": [
-                        "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence",
-                        "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence\\build-in",
-                        "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence\\build-in\\STD"
-                    ],
+                    "incList": [],
                     "libList": [],
                     "sourceDirList": [],
                     "defineList": []
@@ -24,30 +20,51 @@
                 {
                     "name": "STD",
                     "incList": [
-                        "c:\\Keil_v5\\C51\\INC",
-                        "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence\\build-in\\STD"
+                        ".\\..\\..\\..\\..\\..\\..\\Keil_v5\\C51\\INC"
                     ],
-                    "sourceDirList": [
-                        "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence\\build-in\\STD"
-                    ],
+                    "sourceDirList": [],
                     "libList": [
-                        "c:\\Keil_v5\\C51\\LIB"
+                        ".\\..\\..\\..\\..\\..\\..\\Keil_v5\\C51\\LIB"
                     ],
                     "defineList": []
+                },
+                {
+                    "name": "default",
+                    "incList": [],
+                    "libList": [],
+                    "sourceDirList": [],
+                    "defineList": []
+                },
+                {
+                    "name": "toolchain",
+                    "incList": [
+                        ".\\..\\..\\..\\..\\..\\..\\Keil_v5\\C51\\INC"
+                    ],
+                    "sourceDirList": [],
+                    "libList": [
+                        ".\\..\\..\\..\\..\\..\\..\\Keil_v5\\C51\\LIB"
+                    ],
+                    "defineList": [
+                        "__UVISION_VERSION=526"
+                    ]
                 }
             ]
         }
     ],
     "compileConfig": {
-        "optimizationLevel": "8",
-        "optimizationType": "1",
-        "ramMode": "COMPACT",
-        "romMode": "LARGE",
-        "removeUnusedCode": true
+        "options": "null"
     },
     "srcDirs": [
-        ".\\src",
-        ".\\dependence"
+        ".\\src"
     ],
-    "outDir": ".\\out"
+    "outDir": ".\\out",
+    "mode": "Release",
+    "toolchain": "Keil_C51",
+    "uploader": "stcgal",
+    "excludeList": [],
+    "uploadConfig": {
+        "bin": ".\\out\\Release\\Sdcc-StepControl.hex",
+        "eepromImgPath": "null",
+        "options": ".eide/stc.flash.json"
+    }
 }

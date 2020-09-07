@@ -3,13 +3,44 @@
         {
             "name": "win32",
             "includePath": [
-                "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence",
-                "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence\\build-in",
-                "c:\\Users\\Administrator\\Documents\\Source\\MCU\\bujin\\.\\dependence\\build-in\\STD",
-                "c:\\Keil_v5\\C51\\INC"
+                ".\\..\\..\\..\\..\\..\\..\\Keil_v5\\C51\\INC",
+                ".\\..\\..\\..\\..\\..\\..\\Keil_v5\\C51\\INC",
+                ".\\src"
             ],
-            "defines": [],
-            "intelliSenseMode": "${default}"
+            "defines": [
+                "__UVISION_VERSION=526",
+                "__C51__",
+                "__VSCODE_C51__",
+                "reentrant=",
+                "compact=",
+                "small=",
+                "large=",
+                "data=",
+                "bdata=",
+                "idata=",
+                "pdata=",
+                "xdata=",
+                "code=",
+                "bit=char",
+                "sbit=char",
+                "sfr=char",
+                "sfr16=int",
+                "sfr32=int",
+                "interrupt=",
+                "using=",
+                "_at_=",
+                "_priority_=",
+                "_task_="
+            ],
+            "intelliSenseMode": "${default}",
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    ".\\..\\..\\..\\..\\..\\..\\Keil_v5\\C51\\INC\\*",
+                    ".\\..\\..\\..\\..\\..\\..\\Keil_v5\\C51\\INC\\*",
+                    ".\\src\\*"
+                ]
+            }
         }
     ],
     "version": 4
